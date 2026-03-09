@@ -8,7 +8,7 @@
 
 package:
   name: "rest"
-  version: "2025.02.2"
+  version: "2025.02.3"
 
 source:
   #url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
@@ -27,7 +27,7 @@ source:
     # rev: master
   - git: https://gitee.com/restgroup/rest.git
     #tag: v2025.01
-    rev: 3a78c2990b6ecce42e7eeba8ca46e1b9be112006
+    rev: 07cf12b5ea7e171a22010b44656bc74e0fcc1aac
     target_directory: rest
   - git: https://gitee.com/restgroup/rest_tensors.git
     tag: v2025.02
@@ -43,7 +43,7 @@ source:
     target_directory: rest_regression
 
 build:
-  number: 5
+  number: 0
   files:
     exclude:
       - "**/__pycache__"
@@ -61,19 +61,6 @@ build:
       cp ${BUILD_PREFIX}/lib/*.so ../rest_deps/lib/
       cp ${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.so ../rest_deps/lib/
       export LIBCLANG_PATH="$BUILD_PREFIX/lib"
-      # export GCC_INCLUDE="${BUILD_PREFIX}/lib/gcc/x86_64-conda-linux-gnu/15.2.0/include/"
-      # export CFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
-      # export CXXFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
-      # export LDFLAGS="--sysroot=${CONDA_BUILD_SYSROOT}"
-      # export RUSTFLAGS="--verbose -C link-arg=--sysroot=${CONDA_BUILD_SYSROOT} -C link-arg=-Wl,--dynamic-linker=${CONDA_BUILD_SYSROOT}/lib64/ld-linux-x86-64.so.2 -C link-arg=--verbose -C link-arg=-Wl,--verbose"
-      # export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=$CONDA_BUILD_SYSROOT -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
-      # echo $LDFLAGS
-      # ls ${CONDA_BUILD_SYSROOT}/usr/lib
-      # cargo build --release --verbose --target=x86_64-unknown-linux-gnu
-      # export RUSTFLAGS="-C link-arg=--verbose -C link-arg=-Wl,--verbose"
-      # export LD_LIBRARY_PATH="${CONDA_BUILD_SYSROOT}/usr/lib:${LD_LIBRARY_PATH}"
-      # export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER="clang"
-      # export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=$CONDA_PREFIX/bin/mold"
       cargo install --path . --profile release --root ${PREFIX}
       mkdir -p ${PREFIX}/share/rest/
       cp -r ./basis-set-pool ${PREFIX}/share/rest/ 
@@ -90,7 +77,7 @@ requirements:
     - ${{ compiler('cxx') }}
     - ${{ compiler('fortran') }}
     - ${{ compiler('rust') }}
-    - libclang
+    - libclang 21.*
     - hdf5
     - libcint
     - openblas * openmp*
