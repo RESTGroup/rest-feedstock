@@ -60,8 +60,8 @@ build:
       cd rest
       mkdir ../rest_deps
       mkdir ../rest_deps/lib
-      cp ${BUILD_PREFIX}/lib/*.so ../rest_deps/lib/
-      cp ${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.so ../rest_deps/lib/
+      cp -d ${BUILD_PREFIX}/lib/*.so ../rest_deps/lib/
+      cp -d ${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.so ../rest_deps/lib/
       export LIBCLANG_PATH="$BUILD_PREFIX/lib"
       # export GCC_INCLUDE="${BUILD_PREFIX}/lib/gcc/x86_64-conda-linux-gnu/15.2.0/include/"
       # export CFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
