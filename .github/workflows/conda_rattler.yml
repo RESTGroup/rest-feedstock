@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - cargo-test
     paths:
       - recipe_rattler/**
       - recipe_rest_util/**
