@@ -76,6 +76,7 @@ build:
       # export LD_LIBRARY_PATH="${CONDA_BUILD_SYSROOT}/usr/lib:${LD_LIBRARY_PATH}"
       # export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER="clang"
       # export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=$CONDA_PREFIX/bin/mold"
+      cargo test
       cargo install --path . --profile release --root ${PREFIX}
       mkdir -p ${PREFIX}/share/rest/
       cp -r ./basis-set-pool ${PREFIX}/share/rest/ 
