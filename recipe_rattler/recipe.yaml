@@ -25,11 +25,11 @@ source:
   - git: https://gitee.com/restgroup/rest_workspace.git
     tag: v2025.02
     # rev: master
-  # - git: https://gitee.com/restgroup/rest.git
-  - git: https://gitee.com/canarias/rest.git
+  - git: https://gitee.com/restgroup/rest.git
+  #- git: https://gitee.com/canarias/rest.git
     #tag: v2025.01
-    # rev: 3a78c2990b6ecce42e7eeba8ca46e1b9be112006
-    branch: mpi-fix
+    rev: 3a78c2990b6ecce42e7eeba8ca46e1b9be112006
+    #branch: mpi-fix
     target_directory: rest
   - git: https://gitee.com/restgroup/rest_tensors.git
     tag: v2025.02
@@ -92,7 +92,7 @@ requirements:
     - ${{ compiler('cxx') }}
     - ${{ compiler('fortran') }}
     - ${{ compiler('rust') }}
-    - libclang
+    - libclang 21.*
     - hdf5
     - libcint
     - openblas * openmp*
