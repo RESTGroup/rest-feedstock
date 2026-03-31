@@ -8,7 +8,7 @@
 
 package:
   name: "rest"
-  version: "2025.02.3"
+  version: "2025.02.4"
 
 source:
   #url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
@@ -27,11 +27,11 @@ source:
     # rev: master
   - git: https://gitee.com/restgroup/rest.git
     #tag: v2025.01
-    rev: 07cf12b5ea7e171a22010b44656bc74e0fcc1aac
+    rev: 80c39f726e9b2354ca5021dd5d4cade2f97a2dc9
     target_directory: rest
   - git: https://gitee.com/restgroup/rest_tensors.git
-    tag: v2025.02
-    # rev: master
+    #tag: v2025.02
+    rev: 5ca3dba301041c2c2df4d5a8b0c5c36dddda5797
     target_directory: rest_tensors
   - git: https://gitee.com/restgroup/rest_libcint.git
     #tag: v2025.01
