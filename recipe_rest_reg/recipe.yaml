@@ -8,12 +8,12 @@
 
 package:
   name: "rest_regression"
-  version: v2025.02
+  version: v2025.02.4
 
 source:
   - git: https://gitee.com/restgroup/rest_regression.git
-    # git_rev: af3223852d5c240c004ef200c5d1fb0270df2267
-    tag: v2025.02
+    git_rev: 71be51b48bbf43c87e41609f12be93bb57eae6e2
+    # tag: v2025.02
     target_directory: rest_regression
 
 build:
@@ -36,7 +36,8 @@ requirements:
   build:
     - ${{ compiler('rust') }}
     # - libclang
-    - sysroot_linux-64 ==2.17
+    - if: linux
+      then: sysroot_linux-64 ==2.17
   # host:
   # run:
 

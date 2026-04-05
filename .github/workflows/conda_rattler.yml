@@ -11,6 +11,41 @@ on:
   #   branches:
   #     - main
 jobs:
+  build-macos-arm64:
+    runs-on: macos-14
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          activate-environment: build-env
+          environment-file: env_rattler.yaml
+      - name: Build recipe
+        run: |
+          conda info
+          conda activate build-env
+          rattler-build build --recipe recipe_rattler --output-dir output --skip-existing=all -c conda-forge -c mokit -c restgroup
+      - name: Build util
+        run: |
+          conda activate build-env
+          rattler-build build --recipe recipe_rest_util --output-dir output --skip-existing=all -c conda-forge -c restgroup
+      - name: Upload to Anaconda.org
+        continue-on-error: true
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
+        run: |
+          rattler-build upload anaconda -o restgroup ./output/*/rest-20*.conda
+      - name: Upload util to Anaconda.org
+        continue-on-error: true
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
+        run: |
+          rattler-build upload anaconda -o restgroup ./output/*/rest-util*.conda
+
   build-default-sysroot217:
     runs-on: ubuntu-22.04
     defaults:
