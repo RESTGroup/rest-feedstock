@@ -7,5 +7,5 @@ which rest
 echo ${REST_EXT_DIR}
 echo ${REST_HOME}
 echo ${PREFIX}
-${PREFIX}/bin/rest_regression -r ./bench_pool -p ${PREFIX}/bin/rest
-# cat ./work_pool/HI_RHF_GRAD.log
+# catch the error if rest_regression fail and print the log file
+${PREFIX}/bin/rest_regression -r ./bench_pool -p ${PREFIX}/bin/rest || cat ./work_pool/HI_RHF_GRAD.log
