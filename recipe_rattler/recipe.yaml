@@ -75,6 +75,9 @@ build:
       mkdir -p ${PREFIX}/share/rest/
       cp -r ./basis-set-pool ${PREFIX}/share/rest/
       cp ${REST_EXT_DIR}/librestmatr.${LIB_EXT} ${PREFIX}/lib/
+      if [[ "$target_platform" == osx-* ]]; then
+        install_name_tool -id "@rpath/librestmatr.dylib" ${PREFIX}/lib/librestmatr.dylib
+      fi
       cp ${REST_EXT_DIR}/librest2fch.${LIB_EXT} ${PREFIX}/lib/
       # todo: remove the manual copy
 
