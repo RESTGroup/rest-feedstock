@@ -56,7 +56,7 @@ build:
     env:
       REST_HOME: ${SRC_DIR}
       # REST_DEPS: "${SRC_DIR}/rest_deps_placeholder_placeholder"
-      REST_EXT_DIR: "${BUILD_PREFIX}/lib"
+      REST_EXT_DIR: "${PREFIX}/lib"
       HDF5_DIR: "${BUILD_PREFIX}"
     content: |
       set -ex
