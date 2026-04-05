@@ -25,9 +25,11 @@ source:
   - git: https://gitee.com/restgroup/rest_workspace.git
     tag: v2025.02
     # rev: master
-  - git: https://gitee.com/restgroup/rest.git
+  #- git: https://gitee.com/restgroup/rest.git
+  - git: https://gitee.com/canarias/rest.git
     #tag: v2025.01
-    rev: 80c39f726e9b2354ca5021dd5d4cade2f97a2dc9
+    #rev: 80c39f726e9b2354ca5021dd5d4cade2f97a2dc9
+    branch: support-mac
     target_directory: rest
   #- git: https://gitee.com/restgroup/rest_tensors.git
   - git: https://gitee.com/canarias/rest_tensors.git
