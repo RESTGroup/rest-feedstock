@@ -55,13 +55,14 @@ build:
   script:
     env:
       REST_HOME: ${SRC_DIR}
-      REST_EXT_DIR: "${SRC_DIR}/rest_deps/lib"
+      REST_DEPS: "${SRC_DIR}/rest_deps_placeholder_placeholder"
+      REST_EXT_DIR: "${REST_DEPS}/lib"
       HDF5_DIR: "${BUILD_PREFIX}"
     content: |
       set -ex
       cd rest
-      mkdir ../rest_deps
-      mkdir ../rest_deps/lib
+      mkdir -p ${REST_DEPS}
+      mkdir -p ${REST_DEPS}/lib
       if [[ "$target_platform" == osx-* ]]; then
         LIB_EXT="dylib"
       else
@@ -73,8 +74,8 @@ build:
       cargo install --path . --profile release --root ${PREFIX}
       mkdir -p ${PREFIX}/share/rest/
       cp -r ./basis-set-pool ${PREFIX}/share/rest/
-      cp ../rest_deps/lib/librestmatr.${LIB_EXT} ${PREFIX}/lib/
-      cp ../rest_deps/lib/librest2fch.${LIB_EXT} ${PREFIX}/lib/
+      cp ${REST_EXT_DIR}/librestmatr.${LIB_EXT} ${PREFIX}/lib/
+      cp ${REST_EXT_DIR}/librest2fch.${LIB_EXT} ${PREFIX}/lib/
       # todo: remove the manual copy
 
 requirements:
