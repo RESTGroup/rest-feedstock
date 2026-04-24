@@ -42,12 +42,12 @@ source:
     rev: ae4f08951ec1746fdc01551c5ae2db1da5c2bd69
     target_directory: rest_libcint
   - git: https://gitee.com/restgroup/rest_regression.git
-    tag: v2025.02
-    # rev: af3223852d5c240c004ef200c5d1fb0270df2267
+    #tag: v2025.02
+    rev: 9d253e2a2d934eacd816e049fce84d4e4b9f6512
     target_directory: rest_regression
 
 build:
-  number: 1
+  number: 2
   files:
     exclude:
       - "**/__pycache__"
