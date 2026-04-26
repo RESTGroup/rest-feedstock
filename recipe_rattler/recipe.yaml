@@ -1,10 +1,4 @@
-# Note: there are many handy hints in comments in this example -- remove them when you've finalized your recipe
-# If your package is python based, we recommend using Grayskull to generate it instead:
-# https://github.com/conda-incubator/grayskull
 
-# Jinja variables help maintain the recipe as you'll update the version only here.
-# Using the name variable with the URL in line 16 is convenient
-# when copying and pasting from another recipe, but not really needed.
 
 package:
   name: "rest"
@@ -83,8 +77,6 @@ build:
 
 requirements:
   build:
-    # If your project compiles code (such as a C extension) then add the required compilers as separate entries here.
-    # Compilers are named 'c', 'cxx', 'fortran', among others
     - ${{ compiler('c') }}
     #- {{ stdlib('c') }}
     - ${{ compiler('cxx') }}
@@ -147,9 +139,6 @@ about:
   description: |
     Rust-based Electronic-Structure Toolkit (REST), 
     aiming at an efficient computational platform for state-of-the-art DFT and WFT methods.
-  #   # Remember to specify the license variants for BSD, Apache, GPL, and LGPL.
-  #   # Use the SPDX identifier, e.g: GPL-2.0-only instead of GNU General Public License version 2.0
-  #   # See https://spdx.org/licenses/
   license: GPL-2.0-only
 #   # The license_family, i.e. "BSD" if license is "BSD-3-Clause".
 #   # Optional
@@ -160,7 +149,7 @@ about:
 #   # See https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#license-file
 #   license_file: LICENSE.txt
 #   # The doc_url and dev_url are optional.
-#   doc_url: https://simplejson.readthedocs.io/
+  doc_url: https://rest-doc.readthedocs.io/en/index.html
 #   dev_url: https://github.com/simplejson/simplejson
 
 extra:

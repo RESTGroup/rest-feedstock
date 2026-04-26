@@ -2,7 +2,8 @@
 
 ## REST components
 
-Currently include executable `rest` only. No `rest_regression`.
+The REST program is packaged into `rest` (executable, basis, etc.) and `rest-util` (python scripts only).
+The binary of `rest_regression` is packaged into `rest_regression`.
 
 Basis sets are placed at `$CONDA_PREFIX/share/rest`.
 
