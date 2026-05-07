@@ -2,7 +2,7 @@
 
 package:
   name: "rest"
-  version: "2025.02.5"
+  version: "2025.02.6"
 
 source:
   #url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
@@ -22,18 +22,18 @@ source:
   - git: https://gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
     #tag: v2025.01
-    rev: 1b35fa0f6e7946316ad71dd65026737256832460
+    rev: 208b61427787a5fb946a1a9b7bf9daa8dd0e4ab9
     #branch: support-mac
     target_directory: rest
   - git: https://gitee.com/restgroup/rest_tensors.git
   #- git: https://gitee.com/canarias/rest_tensors.git
     #tag: v2025.02
-    rev: ba6c8b28a5a1112c715f4bb0272f6c12971fba57
+    rev: 04bb51bd6968f1d32929c2430f1aad021fe8f3e8
     #branch: cfg-libc-import
     target_directory: rest_tensors
   - git: https://gitee.com/restgroup/rest_libcint.git
     #tag: v2025.01
-    rev: ae4f08951ec1746fdc01551c5ae2db1da5c2bd69
+    rev: cba39d4ea645fa1e21de9060278d5de883a51658
     target_directory: rest_libcint
   - git: https://gitee.com/restgroup/rest_regression.git
     #tag: v2025.02
@@ -41,7 +41,7 @@ source:
     target_directory: rest_regression
 
 build:
-  number: 2
+  number: 0
   files:
     exclude:
       - "**/__pycache__"
