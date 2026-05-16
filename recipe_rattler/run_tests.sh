@@ -7,20 +7,23 @@ fi
 set -eux
 cd rest_regression
 # cargo install --path . --profile release --root .
-REST_BIN="${PREFIX}/bin/rest"
-REST_REG_BIN="${PREFIX}/bin/rest_regression"
-if [[ "${target_platform}" == win-* ]]; then
-  if [[ -x "${PREFIX}/bin/rest.exe" ]]; then
-    REST_BIN="${PREFIX}/bin/rest.exe"
-  elif [[ -x "${PREFIX}/Library/bin/rest.exe" ]]; then
-    REST_BIN="${PREFIX}/Library/bin/rest.exe"
+resolve_bin() {
+  local name="$1"
+  local default_path="${PREFIX}/bin/${name}"
+  if [[ "${target_platform}" == win-* ]]; then
+    if [[ -x "${PREFIX}/bin/${name}.exe" ]]; then
+      echo "${PREFIX}/bin/${name}.exe"
+      return 0
+    elif [[ -x "${PREFIX}/Library/bin/${name}.exe" ]]; then
+      echo "${PREFIX}/Library/bin/${name}.exe"
+      return 0
+    fi
   fi
-  if [[ -x "${PREFIX}/bin/rest_regression.exe" ]]; then
-    REST_REG_BIN="${PREFIX}/bin/rest_regression.exe"
-  elif [[ -x "${PREFIX}/Library/bin/rest_regression.exe" ]]; then
-    REST_REG_BIN="${PREFIX}/Library/bin/rest_regression.exe"
-  fi
-fi
+  echo "${default_path}"
+}
+
+REST_BIN="$(resolve_bin rest)"
+REST_REG_BIN="$(resolve_bin rest_regression)"
 test -x "${REST_BIN}"
 test -x "${REST_REG_BIN}"
 echo ${REST_EXT_DIR}
