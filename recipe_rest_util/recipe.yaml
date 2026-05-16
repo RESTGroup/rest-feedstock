@@ -24,15 +24,11 @@ build:
   # noarch: python
   script:
     content: |
-      set -ex
-      mkdir -p ${PREFIX}/bin
-      cp utilities/*.py ${PREFIX}/bin
-      if [[ "$target_platform" == win-* ]]; then
-        mkdir -p ${PREFIX}/Scripts
-        cp utilities/*.py ${PREFIX}/Scripts
-      fi
+      python -c "import glob, os, pathlib, shutil; prefix = pathlib.Path(os.environ['PREFIX']); target = os.environ.get('target_platform', ''); bin_dir = prefix / 'bin'; bin_dir.mkdir(parents=True, exist_ok=True); [shutil.copy2(src, bin_dir / pathlib.Path(src).name) for src in glob.glob('utilities/*.py')]; scripts_dir = prefix / 'Scripts'; (scripts_dir.mkdir(parents=True, exist_ok=True), [shutil.copy2(src, scripts_dir / pathlib.Path(src).name) for src in glob.glob('utilities/*.py')]) if target.startswith('win-') else None"
 
 requirements:
+  build:
+    - python
   run:
     - python 3.11.*
     - matplotlib
