@@ -73,10 +73,10 @@ build:
       mkdir -p "${REST_EXT_DIR}"
       # cp ${BUILD_PREFIX}/lib/*.${LIB_EXT} ${REST_EXT_DIR}/
       MOKIT_LIB=""
+      # Some win-64 mokit builds install this library without the "lib" prefix.
       for CANDIDATE in \
         "${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.${LIB_EXT}" \
         "${BUILD_PREFIX}/Lib/site-packages/mokit/lib/librest2fch.${LIB_EXT}" \
-        # Some win-64 mokit builds install this library without the "lib" prefix.
         "${BUILD_PREFIX}/Lib/site-packages/mokit/lib/rest2fch.${LIB_EXT}"; do
         if [[ -f "${CANDIDATE}" ]]; then
           MOKIT_LIB="${CANDIDATE}"
