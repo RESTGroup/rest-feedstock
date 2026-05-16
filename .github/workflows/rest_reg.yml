@@ -94,6 +94,8 @@ jobs:
 
   build-rest-regression-windows:
     runs-on: windows-latest
+    permissions:
+      contents: read
     defaults:
       run:
         shell: bash -l {0}
@@ -107,7 +109,6 @@ jobs:
           environment-file: env_rattler.yaml
       - name: Build REST Regression recipe (win-64)
         run: |
-          conda activate build-env
           rattler-build build --recipe recipe_rest_reg --no-build-id --output-dir output --target-platform win-64 -c conda-forge
       - name: Upload to Anaconda.org
         continue-on-error: true
