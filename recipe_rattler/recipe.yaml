@@ -37,11 +37,11 @@ source:
     target_directory: rest_libcint
   - git: https://gitee.com/restgroup/rest_regression.git
     #tag: v2025.02
-    rev: 9d253e2a2d934eacd816e049fce84d4e4b9f6512
+    rev: 71be51b48bbf43c87e41609f12be93bb57eae6e2
     target_directory: rest_regression
 
 build:
-  number: 0
+  number: 1
   files:
     exclude:
       - "**/__pycache__"
@@ -50,21 +50,44 @@ build:
     env:
       REST_HOME: ${SRC_DIR}
       # REST_DEPS: "${SRC_DIR}/rest_deps_placeholder_placeholder"
-      REST_EXT_DIR: "${PREFIX}/lib"
       HDF5_DIR: "${BUILD_PREFIX}"
     content: |
       set -ex
       cd rest
       # mkdir -p ${REST_DEPS}
       # mkdir -p ${REST_DEPS}/lib
-      if [[ "$target_platform" == osx-* ]]; then
+      if [[ "$target_platform" == win-* ]]; then
+        LIB_EXT="dll"
+        REST_EXT_DIR="${PREFIX}/Library/bin"
+        LIBCLANG_PATH="${BUILD_PREFIX}/Library/bin"
+      elif [[ "$target_platform" == osx-* ]]; then
         LIB_EXT="dylib"
+        REST_EXT_DIR="${PREFIX}/lib"
+        LIBCLANG_PATH="${BUILD_PREFIX}/lib"
       else
         LIB_EXT="so"
+        REST_EXT_DIR="${PREFIX}/lib"
+        LIBCLANG_PATH="${BUILD_PREFIX}/lib"
       fi
+
+      mkdir -p "${REST_EXT_DIR}"
       # cp ${BUILD_PREFIX}/lib/*.${LIB_EXT} ${REST_EXT_DIR}/
-      cp ${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.${LIB_EXT} ${REST_EXT_DIR}/
-      export LIBCLANG_PATH="$BUILD_PREFIX/lib"
+      MOKIT_LIB=""
+      for CANDIDATE in \
+        "${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.${LIB_EXT}" \
+        "${BUILD_PREFIX}/Lib/site-packages/mokit/lib/librest2fch.${LIB_EXT}" \
+        "${BUILD_PREFIX}/Lib/site-packages/mokit/lib/rest2fch.${LIB_EXT}"; do
+        if [[ -f "${CANDIDATE}" ]]; then
+          MOKIT_LIB="${CANDIDATE}"
+          break
+        fi
+      done
+      if [[ -z "${MOKIT_LIB}" ]]; then
+        echo "Could not find mokit bridge library for extension ${LIB_EXT}" >&2
+        exit 1
+      fi
+      cp "${MOKIT_LIB}" "${REST_EXT_DIR}/"
+      export LIBCLANG_PATH="${LIBCLANG_PATH}"
       cargo install --path . --profile release --root ${PREFIX}
       mkdir -p ${PREFIX}/share/rest/
       cp -r ./basis-set-pool ${PREFIX}/share/rest/
