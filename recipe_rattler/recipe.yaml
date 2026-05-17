@@ -52,7 +52,7 @@ build:
       # REST_DEPS: "${SRC_DIR}/rest_deps_placeholder_placeholder"
       HDF5_DIR: "${BUILD_PREFIX}"
     content: |
-      python -c "import os, pathlib, subprocess; script = pathlib.PurePath(os.environ['RECIPE_DIR'], 'build.sh').as_posix(); print(f'Running build script: {script}'); subprocess.run(['bash', script], check=True)"
+      python -c "import os, runpy; runpy.run_path(os.path.join(os.environ['RECIPE_DIR'], 'run_build.py'), run_name='__main__')"
 
 requirements:
   build:
