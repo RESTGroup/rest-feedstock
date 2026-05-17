@@ -23,15 +23,16 @@ if os.name == "nt":
     try:
         where_bash = subprocess.check_output(["where", "bash"], encoding="utf-8", errors="ignore")
     except (subprocess.CalledProcessError, FileNotFoundError):
+        print("Warning: failed to query bash paths via `where bash`; continuing with fallback candidates.")
         where_bash = ""
     preferred_where = []
     fallback_where = []
     for line in where_bash.splitlines():
         candidate = pathlib.Path(line.strip())
         candidate_str = str(candidate).lower()
-        normalized_candidate = candidate_str.replace("/", "\\")
         if not candidate_str:
             continue
+        normalized_candidate = candidate_str.replace("/", "\\")
         if normalized_candidate.endswith(r"\windows\system32\bash.exe"):
             continue
         if r"\library\usr\bin\bash.exe" in normalized_candidate:
