@@ -52,7 +52,7 @@ build:
       # REST_DEPS: "${SRC_DIR}/rest_deps_placeholder_placeholder"
       HDF5_DIR: "${BUILD_PREFIX}"
     content: |
-      bash "${RECIPE_DIR}/build.sh" || bash "%RECIPE_DIR%/build.sh"
+      python -c "import os, subprocess, sys; script = os.path.join(os.environ['RECIPE_DIR'], 'build.sh').replace('\\\\', '/'); sys.exit(subprocess.call(['bash', script]))"
 
 requirements:
   build:

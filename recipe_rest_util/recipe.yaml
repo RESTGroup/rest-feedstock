@@ -24,7 +24,7 @@ build:
   # noarch: python
   script:
     content: |
-      python "${RECIPE_DIR}/build_util_scripts.py" || python "%RECIPE_DIR%/build_util_scripts.py"
+      python -c "import os, runpy; runpy.run_path(os.path.join(os.environ['RECIPE_DIR'], 'build_util_scripts.py'), run_name='__main__')"
 
 requirements:
   build:
