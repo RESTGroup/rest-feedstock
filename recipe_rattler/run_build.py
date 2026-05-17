@@ -16,6 +16,6 @@ print(f"Running build script: {script}")
 try:
     subprocess.run(["bash", str(script)], check=True)
 except FileNotFoundError as exc:
-    raise RuntimeError("Failed to execute build script: bash was not found in PATH. Ensure bash is installed and available in PATH.") from exc
+    raise RuntimeError("Failed to execute build script: bash not found. Ensure bash is installed and available in PATH.") from exc
 except subprocess.CalledProcessError as exc:
     raise RuntimeError(f"Failed to execute build script: build.sh exited with code {exc.returncode}") from exc
