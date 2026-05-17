@@ -1,5 +1,6 @@
 import os
 import pathlib
+import re
 import shutil
 import subprocess
 
@@ -15,11 +16,46 @@ if not script.is_file():
 print(f"Running build script: {script}")
 
 bash_cmd = "bash"
+run_env = os.environ.copy()
+run_cwd = None
+
+
+def _is_unresolved_placeholder(value: str) -> bool:
+    if not value:
+        return False
+    stripped = value.strip()
+    return bool(re.fullmatch(r"%[^%]+%", stripped) or re.fullmatch(r"\$\{[^}]+\}", stripped))
+
+
 if os.name == "nt":
+    critical_env_vars = ("SRC_DIR", "PREFIX", "BUILD_PREFIX")
+    unresolved = []
+    for env_name in ("RECIPE_DIR", *critical_env_vars):
+        value = run_env.get(env_name, "")
+        expanded = os.path.expandvars(value) if value else value
+        run_env[env_name] = expanded
+        if env_name in critical_env_vars and _is_unresolved_placeholder(expanded):
+            unresolved.append((env_name, value))
+    if unresolved:
+        unresolved_text = ", ".join(f"{name}={raw!r}" for name, raw in unresolved)
+        raise RuntimeError(
+            "Windows build environment variables were not expanded before running build.sh. "
+            f"Unresolved placeholders: {unresolved_text}"
+        )
+    src_dir = run_env.get("SRC_DIR", "").strip()
+    if src_dir:
+        src_dir_path = pathlib.Path(src_dir)
+        if src_dir_path.is_dir():
+            run_cwd = str(src_dir_path)
+
     candidates = []
     bash_env = os.environ.get("BASH")
     if bash_env:
         candidates.append(pathlib.Path(bash_env))
+    build_prefix = run_env.get("BUILD_PREFIX")
+    build_prefix_stripped = build_prefix.strip() if build_prefix else ""
+    if build_prefix_stripped and build_prefix_stripped != "%BUILD_PREFIX%":
+        candidates.append(pathlib.Path(build_prefix) / "Library" / "usr" / "bin" / "bash.exe")
     try:
         where_bash = subprocess.check_output(["where", "bash"], encoding="utf-8", errors="ignore")
     except (subprocess.CalledProcessError, FileNotFoundError):
@@ -40,12 +76,6 @@ if os.name == "nt":
         else:
             fallback_where.append(candidate)
     candidates.extend(preferred_where)
-    candidates.extend(fallback_where)
-    build_prefix = os.environ.get("BUILD_PREFIX")
-    build_prefix_stripped = build_prefix.strip() if build_prefix else ""
-    # Ignore unresolved cmd-style placeholders like "%BUILD_PREFIX%".
-    if build_prefix_stripped and build_prefix_stripped != "%BUILD_PREFIX%":
-        candidates.append(pathlib.Path(build_prefix) / "Library" / "usr" / "bin" / "bash.exe")
     pf_values = [
         os.environ.get("ProgramW6432"),
         os.environ.get("ProgramFiles"),
@@ -59,6 +89,7 @@ if os.name == "nt":
             continue
         seen.add(pf)
         candidates.append(pathlib.Path(pf) / "Git" / "bin" / "bash.exe")
+    candidates.extend(fallback_where)
     seen_candidates = set()
     for candidate in candidates:
         candidate_key = str(candidate).lower()
@@ -76,8 +107,10 @@ if os.name == "nt":
             )
         bash_cmd = bash_in_path
 
+print(f"Using bash executable: {bash_cmd}")
+
 try:
-    subprocess.run([bash_cmd, str(script)], check=True)
+    subprocess.run([bash_cmd, str(script)], check=True, env=run_env, cwd=run_cwd)
 except FileNotFoundError as exc:
     raise RuntimeError(f"Failed to execute build script: bash not found ({bash_cmd}). Ensure bash is installed and available in PATH.") from exc
 except subprocess.CalledProcessError as exc:
