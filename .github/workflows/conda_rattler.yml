@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - copilot/support-win-64
     paths:
       - recipe_rattler/**
       - recipe_rest_util/**
@@ -137,3 +138,27 @@ jobs:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
         run: |
           rattler-build upload anaconda -o restgroup ./output/*/rest-util*.conda
+
+  build-rest-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          activate-environment: build-env
+          environment-file: env_rattler.yaml
+      - name: Build recipe (win-64)
+        run: |
+          conda activate build-env
+          rattler-build build --recipe recipe_rattler --output-dir output --skip-existing=all --target-platform win-64 -c conda-forge -c mokit -c restgroup
+      - name: Upload to Anaconda.org
+        continue-on-error: true
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
+        run: |
+          rattler-build upload anaconda -o restgroup ./output/*/rest-20*.conda

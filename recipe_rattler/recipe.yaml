@@ -25,11 +25,11 @@ source:
     rev: 208b61427787a5fb946a1a9b7bf9daa8dd0e4ab9
     #branch: support-mac
     target_directory: rest
-  - git: https://gitee.com/restgroup/rest_tensors.git
-  #- git: https://gitee.com/canarias/rest_tensors.git
+  #- git: https://gitee.com/restgroup/rest_tensors.git
+  - git: https://gitee.com/canarias/rest_tensors.git
     #tag: v2025.02
-    rev: 04bb51bd6968f1d32929c2430f1aad021fe8f3e8
-    #branch: cfg-libc-import
+    #rev: 04bb51bd6968f1d32929c2430f1aad021fe8f3e8
+    branch: for-win
     target_directory: rest_tensors
   - git: https://gitee.com/restgroup/rest_libcint.git
     #tag: v2025.01
@@ -41,7 +41,7 @@ source:
     target_directory: rest_regression
 
 build:
-  number: 0
+  number: 1
   files:
     exclude:
       - "**/__pycache__"
@@ -50,37 +50,22 @@ build:
     env:
       REST_HOME: ${SRC_DIR}
       # REST_DEPS: "${SRC_DIR}/rest_deps_placeholder_placeholder"
-      REST_EXT_DIR: "${PREFIX}/lib"
       HDF5_DIR: "${BUILD_PREFIX}"
     content: |
-      set -ex
-      cd rest
-      # mkdir -p ${REST_DEPS}
-      # mkdir -p ${REST_DEPS}/lib
-      if [[ "$target_platform" == osx-* ]]; then
-        LIB_EXT="dylib"
-      else
-        LIB_EXT="so"
-      fi
-      # cp ${BUILD_PREFIX}/lib/*.${LIB_EXT} ${REST_EXT_DIR}/
-      cp ${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.${LIB_EXT} ${REST_EXT_DIR}/
-      export LIBCLANG_PATH="$BUILD_PREFIX/lib"
-      cargo install --path . --profile release --root ${PREFIX}
-      mkdir -p ${PREFIX}/share/rest/
-      cp -r ./basis-set-pool ${PREFIX}/share/rest/
-      # cp ${REST_EXT_DIR}/librestmatr.${LIB_EXT} ${PREFIX}/lib/
-      # if [[ "$target_platform" == osx-* ]]; then
-      #   install_name_tool -id "@rpath/librestmatr.dylib" ${PREFIX}/lib/librestmatr.dylib
-      # fi
-      # cp ${REST_EXT_DIR}/librest2fch.${LIB_EXT} ${PREFIX}/lib/
-      # todo: remove the manual copy
+      python -c "import os, runpy; runpy.run_path(os.path.join(os.environ['RECIPE_DIR'], 'run_build.py'), run_name='__main__')"
 
 requirements:
   build:
-    - ${{ compiler('c') }}
+    - if: win64
+      then: gcc_win-64
+      else: ${{ compiler('c') }}
     #- {{ stdlib('c') }}
-    - ${{ compiler('cxx') }}
-    - ${{ compiler('fortran') }}
+    - if: win64
+      then: gxx_win-64
+      else: ${{ compiler('cxx') }}
+    - if: win64
+      then: gfortran_win-64
+      else: ${{ compiler('fortran') }}
     - ${{ compiler('rust') }}
     - libclang 21.*
     - hdf5
