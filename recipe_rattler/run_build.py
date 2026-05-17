@@ -16,19 +16,23 @@ print(f"Running build script: {script}")
 
 bash_cmd = "bash"
 if os.name == "nt":
+    candidates = []
+    build_prefix = os.environ.get("BUILD_PREFIX")
+    if build_prefix:
+        candidates.append(pathlib.Path(build_prefix) / "Library" / "usr" / "bin" / "bash.exe")
     pf_values = [
         os.environ.get("ProgramW6432"),
         os.environ.get("ProgramFiles"),
         os.environ.get("ProgramFiles(x86)"),
-        r"C:\Program Files",
     ]
-    candidates = []
+    seen = set()
     for pf in pf_values:
-        if pf:
-            candidates.append(pathlib.Path(pf) / "Git" / "bin" / "bash.exe")
-    build_prefix = os.environ.get("BUILD_PREFIX")
-    if build_prefix:
-        candidates.append(pathlib.Path(build_prefix) / "Library" / "usr" / "bin" / "bash.exe")
+        if not pf:
+            continue
+        if pf in seen:
+            continue
+        seen.add(pf)
+        candidates.append(pathlib.Path(pf) / "Git" / "bin" / "bash.exe")
     for candidate in candidates:
         if candidate.is_file():
             bash_cmd = str(candidate)
