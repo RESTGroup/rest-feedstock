@@ -32,7 +32,7 @@ if os.name == "nt":
         candidate_str = str(candidate).lower()
         if not candidate_str:
             continue
-        normalized_candidate = candidate_str.replace("/", "\\")
+        normalized_candidate = os.path.normpath(candidate_str).replace("/", "\\")
         if normalized_candidate.endswith(r"\windows\system32\bash.exe"):
             continue
         if r"\library\usr\bin\bash.exe" in normalized_candidate:
@@ -42,8 +42,9 @@ if os.name == "nt":
     candidates.extend(preferred_where)
     candidates.extend(fallback_where)
     build_prefix = os.environ.get("BUILD_PREFIX")
+    build_prefix_stripped = build_prefix.strip() if build_prefix else ""
     # Ignore unresolved cmd-style placeholders like "%BUILD_PREFIX%".
-    if build_prefix and build_prefix.strip() and build_prefix.strip() != "%BUILD_PREFIX%":
+    if build_prefix_stripped and build_prefix_stripped != "%BUILD_PREFIX%":
         candidates.append(pathlib.Path(build_prefix) / "Library" / "usr" / "bin" / "bash.exe")
     pf_values = [
         os.environ.get("ProgramW6432"),
