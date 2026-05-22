@@ -1,5 +1,109 @@
-@echo off
+@echo on
 setlocal enabledelayedexpansion
+
+echo === Working directory ===
+cd
+
+echo === Contents of SRC_DIR ===
+dir "%SRC_DIR%"
+
+echo.
+echo === Checking rest directory ===
+if exist "%SRC_DIR%\rest" (
+  echo Directory exists: %SRC_DIR%\rest
+  dir "%SRC_DIR%\rest"
+  if exist "%SRC_DIR%\rest\.git" (
+    echo .git directory exists
+    dir "%SRC_DIR%\rest\.git"
+  ) else (
+    echo WARNING: No .git directory in rest
+  )
+  if exist "%SRC_DIR%\rest\.ok" (
+    echo .ok file exists
+  ) else (
+    echo WARNING: No .ok file in rest
+  )
+  if exist "%SRC_DIR%\rest\Cargo.toml" (
+    echo rest/Cargo.toml: FOUND
+  ) else (
+    echo rest/Cargo.toml: MISSING
+  )
+) else (
+  echo ERROR: rest directory does not exist
+)
+
+echo.
+echo === Checking rest_tensors directory ===
+if exist "%SRC_DIR%\rest_tensors" (
+  echo Directory exists: %SRC_DIR%\rest_tensors
+  dir "%SRC_DIR%\rest_tensors"
+  if exist "%SRC_DIR%\rest_tensors\.git" (
+    echo .git directory exists
+    dir "%SRC_DIR%\rest_tensors\.git"
+  ) else (
+    echo WARNING: No .git directory in rest_tensors
+  )
+  if exist "%SRC_DIR%\rest_tensors\.ok" (
+    echo .ok file exists
+  ) else (
+    echo WARNING: No .ok file in rest_tensors
+  )
+  if exist "%SRC_DIR%\rest_tensors\Cargo.toml" (
+    echo rest_tensors/Cargo.toml: FOUND
+  ) else (
+    echo rest_tensors/Cargo.toml: MISSING
+  )
+) else (
+  echo ERROR: rest_tensors directory does not exist
+)
+
+echo.
+echo === Checking rest_libcint directory ===
+if exist "%SRC_DIR%\rest_libcint" (
+  echo Directory exists: %SRC_DIR%\rest_libcint
+  dir "%SRC_DIR%\rest_libcint"
+  if exist "%SRC_DIR%\rest_libcint\.git" (
+    echo .git directory exists
+    dir "%SRC_DIR%\rest_libcint\.git"
+  ) else (
+    echo WARNING: No .git directory in rest_libcint
+  )
+  if exist "%SRC_DIR%\rest_libcint\.ok" (
+    echo .ok file exists
+  ) else (
+    echo WARNING: No .ok file in rest_libcint
+  )
+) else (
+  echo ERROR: rest_libcint directory does not exist
+)
+
+echo.
+echo === Checking rest_regression directory ===
+if exist "%SRC_DIR%\rest_regression" (
+  echo Directory exists: %SRC_DIR%\rest_regression
+  dir "%SRC_DIR%\rest_regression"
+  if exist "%SRC_DIR%\rest_regression\.git" (
+    echo .git directory exists
+    dir "%SRC_DIR%\rest_regression\.git"
+  ) else (
+    echo WARNING: No .git directory in rest_regression
+  )
+  if exist "%SRC_DIR%\rest_regression\.ok" (
+    echo .ok file exists
+  ) else (
+    echo WARNING: No .ok file in rest_regression
+  )
+  if exist "%SRC_DIR%\rest_regression\Cargo.toml" (
+    echo rest_regression/Cargo.toml: FOUND
+  ) else (
+    echo rest_regression/Cargo.toml: MISSING
+  )
+) else (
+  echo ERROR: rest_regression directory does not exist
+)
+
+echo.
+echo === Starting build ===
 
 echo === Creating workspace Cargo.toml ===
 (
