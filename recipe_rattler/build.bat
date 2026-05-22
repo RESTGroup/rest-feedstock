@@ -13,8 +13,27 @@ cd /d rest || exit /b 1
 echo === Current directory ===
 cd
 
-echo === Contents of rest directory ===
+echo === Contents of rest directory before checkout ===
 dir
+
+if not exist "Cargo.toml" (
+  echo === Cargo.toml not found, checking out working tree ===
+  git status
+  git checkout HEAD -- .
+  if errorlevel 1 (
+    echo Git checkout failed
+    exit /b 1
+  )
+  echo === Contents of rest directory after checkout ===
+  dir
+) else (
+  echo === Cargo.toml already exists ===
+)
+
+if not exist "Cargo.toml" (
+  echo Cargo.toml still not found after checkout
+  exit /b 1
+)
 
 set LIB_EXT=dll
 set REST_EXT_DIR=%PREFIX%\Library\bin
@@ -49,4 +68,9 @@ if not exist %PREFIX%\share\rest\ (
   mkdir %PREFIX%\share\rest\
 )
 
-xcopy /E /I /Y /Q .\basis-set-pool %PREFIX%\share\rest\
+if exist .\basis-set-pool (
+  echo Copying from .\basis-set-pool
+  xcopy /E /I /Y /Q .\basis-set-pool %PREFIX%\share\rest\
+) else (
+  echo Warning: basis-set-pool not found
+)
