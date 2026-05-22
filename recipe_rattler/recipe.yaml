@@ -47,10 +47,7 @@ build:
       - "**/__pycache__"
       - "**/test-files"
   script:
-    - if: win
-      then: build.bat
-      else: bash build.sh
-    env:
+    - env:
       REST_HOME: ${SRC_DIR}
       HDF5_DIR: "${BUILD_PREFIX}"
 
