@@ -41,7 +41,7 @@ source:
     target_directory: rest_regression
 
 build:
-  number: 0
+  number: 1
   files:
     exclude:
       - "**/__pycache__"
@@ -88,7 +88,7 @@ requirements:
     - openblas * openmp*
     - python
     - libxc-c
-    - openmpi 4.*
+    - openmpi 
     - mokit
     - geometric
     - simple-dftd3
@@ -103,7 +103,7 @@ requirements:
     - openblas * openmp*
     - python
     - libxc-c
-    - openmpi 4.*
+    - openmpi 
     - mokit
     - geometric
     - simple-dftd3
@@ -116,7 +116,7 @@ requirements:
     - openblas * openmp*
     - python
     - libxc-c
-    - openmpi 4.*
+    - openmpi 
     - mokit
     - geometric
     - simple-dftd3
