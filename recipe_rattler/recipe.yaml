@@ -47,7 +47,7 @@ build:
       - "**/__pycache__"
       - "**/test-files"
   script:
-    - env:
+    env:
       REST_HOME: ${SRC_DIR}
       HDF5_DIR: "${BUILD_PREFIX}"
 
