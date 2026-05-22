@@ -47,12 +47,12 @@ build:
       - "**/__pycache__"
       - "**/test-files"
   script:
+    - if: win
+      then: build.bat
+      else: bash build.sh
     env:
       REST_HOME: ${SRC_DIR}
-      # REST_DEPS: "${SRC_DIR}/rest_deps_placeholder_placeholder"
       HDF5_DIR: "${BUILD_PREFIX}"
-    content: |
-      python -c "import os, runpy; runpy.run_path(os.path.join(os.environ['RECIPE_DIR'], 'run_build.py'), run_name='__main__')"
 
 requirements:
   build:
