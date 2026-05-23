@@ -51,6 +51,8 @@ requirements:
       then: gfortran_win-64
       else: ${{ compiler('fortran') }}
     - ${{ compiler('rust') }}
+    - if: win64
+      then: rust-std-x86_64-pc-windows-gnu
     - libclang 21.*
     - hdf5
     - libcint
