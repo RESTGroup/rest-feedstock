@@ -141,27 +141,23 @@ jobs:
         run: |
           rattler-build upload anaconda -o restgroup ./output/*/rest-util*.conda
 
-  build-rest-windows:
-    if: github.ref_name == 'copilot/support-win-64'
-    runs-on: windows-latest
+  build-cross-windows:
+    if: github.ref_name == 'cross-win-64'
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        shell: bash -l {0}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-      - uses: prefix-dev/setup-pixi@v0.8.8
-        with:
-          pixi-version: v0.47.0
-          locked: false
-
-      - name: Build recipe (win-64)
-        shell: bash
+      - uses: ./actions/cache-setup-conda
+      - name: Build recipe (win-64 cross-compile)
+        run: |
+          conda info
+          conda activate build-env
+          rattler-build build --recipe recipe_rattler --output-dir output --skip-existing=all --target-platform=win-64 -c conda-forge -c mokit -c restgroup
+      - name: Upload to Anaconda.org
+        continue-on-error: true
         env:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
         run: |
-          pixi run rattler-build build --recipe-dir recipe_rattler \
-            --skip-existing=all --target-platform=win-64 \
-            -c conda-forge -c mokit -c restgroup
-
-          for file in output/**/*.conda; do
-            pixi run rattler-build upload anaconda -o restgroup "$file" || true
-          done
+          rattler-build upload anaconda -o restgroup ./output/*/rest-20*.conda

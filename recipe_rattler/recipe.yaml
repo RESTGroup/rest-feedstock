@@ -40,18 +40,18 @@ build:
 
 requirements:
   build:
-    - if: win64
+    - if: win
       then: gcc_win-64
       else: ${{ compiler('c') }}
     #- {{ stdlib('c') }}
-    - if: win64
+    - if: win
       then: gxx_win-64
       else: ${{ compiler('cxx') }}
-    - if: win64
+    - if: win
       then: gfortran_win-64
       else: ${{ compiler('fortran') }}
     - ${{ compiler('rust') }}
-    - if: win64
+    - if: win
       then: rust-std-x86_64-pc-windows-gnu
     - libclang 21.*
     - hdf5
