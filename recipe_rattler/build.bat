@@ -151,7 +151,7 @@ set CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=x86_64-w64-mingw32-gcc
 
 echo === Running cargo install ===
 cargo -vV
-cargo install --verbose --path . --profile release --root %PREFIX%
+cargo install --verbose --path . --profile release --target x86_64-pc-windows-gnu --root %PREFIX%
 
 echo === Copying basis-set-pool ===
 if not exist %PREFIX%\share\rest\ (
