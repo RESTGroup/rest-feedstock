@@ -40,9 +40,15 @@ build:
 
 requirements:
   build:
-    - ${{ compiler('c') }}
-    - ${{ compiler('cxx') }}
-    - ${{ compiler('fortran') }}
+    - if: win
+      then: gcc_linux-64
+      else: ${{ compiler('c') }}
+    - if: win
+      then: gxx_linux-64
+      else: ${{ compiler('cxx') }}
+    - if: win
+      then: gfortran_linux-64
+      else: ${{ compiler('fortran') }}
     - ${{ compiler('rust') }}
     - if: win
       then: rust-std-x86_64-pc-windows-gnu
