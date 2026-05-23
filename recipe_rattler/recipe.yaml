@@ -37,9 +37,6 @@ build:
     env:
       REST_HOME: ${SRC_DIR}
       HDF5_DIR: "${BUILD_PREFIX}"
-      if: win
-      then:
-        CARGO_BUILD_TARGET: x86_64-pc-windows-gnu
 
 requirements:
   build:
