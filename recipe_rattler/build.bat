@@ -148,6 +148,7 @@ copy "%MOKIT_LIB%" "%REST_EXT_DIR%\"
 set LIBCLANG_PATH=%LIBCLANG_PATH%
 set REST_EXT_DIR=%REST_EXT_DIR%
 set CARGO_BUILD_TARGET=x86_64-pc-windows-gnu
+set CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=x86_64-w64-mingw32-gcc
 
 echo === Running cargo install ===
 cargo install --path . --profile release --root %PREFIX%
