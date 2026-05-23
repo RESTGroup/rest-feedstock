@@ -41,14 +41,16 @@ build:
 requirements:
   build:
     - if: win
-      then: gcc_linux-64
+      then: ${{ compiler('m2w64_c') }}
       else: ${{ compiler('c') }}
     - if: win
-      then: gxx_linux-64
+      then: ${{ compiler('m2w64_cxx') }}
       else: ${{ compiler('cxx') }}
     - if: win
-      then: gfortran_linux-64
+      then: ${{ compiler('m2w64_fortran') }}
       else: ${{ compiler('fortran') }}
+    - if: win
+      then: ${{ stdlib('m2w64_c') }}
     - ${{ compiler('rust') }}
     - if: win
       then: rust-std-x86_64-pc-windows-gnu
