@@ -4,16 +4,6 @@ if [[ "$target_platform" == win-64 ]]; then
   LIB_EXT="dll"
   REST_EXT_DIR="${PREFIX}/Library/bin"
 
-#   mkdir -p "${SRC_DIR}/.cargo"
-#   cat > "${SRC_DIR}/.cargo/config.toml" << EOF
-# [build]
-# target = "x86_64-pc-windows-gnu"
-
-# [target.x86_64-pc-windows-gnu]
-# linker = "x86_64-w64-mingw32-gcc"
-# ar = "x86_64-w64-mingw32-ar"
-# EOF
-
   MOKIT_LIB="${BUILD_PREFIX}/Lib/site-packages/mokit/lib/librest2fch.${LIB_EXT}"
 else
   if [[ "$target_platform" == osx-* ]]; then

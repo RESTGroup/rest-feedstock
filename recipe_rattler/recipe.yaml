@@ -41,15 +41,12 @@ build:
 requirements:
   build:
     - if: win
-      then: gcc_win-64
+      then: m2w64-toolchain
       else: ${{ compiler('c') }}
-    #- {{ stdlib('c') }}
-    - if: win
-      then: gxx_win-64
-      else: ${{ compiler('cxx') }}
-    - if: win
-      then: gfortran_win-64
-      else: ${{ compiler('fortran') }}
+    - if: not win
+      then: ${{ compiler('cxx') }}
+    - if: not win
+      then: ${{ compiler('fortran') }}
     - ${{ compiler('rust') }}
     - if: win
       then: rust-std-x86_64-pc-windows-gnu
