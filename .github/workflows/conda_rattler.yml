@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - copilot/support-win-64
+      - cross-win-64
     paths:
       - recipe_rattler/**
       - recipe_rest_util/**

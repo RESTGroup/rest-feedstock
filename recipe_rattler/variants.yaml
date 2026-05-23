@@ -5,8 +5,8 @@ c_stdlib_version:
 rust_compiler_version:
   - "1.94"
 simple-dftd3:
-  - 1.2.*
+  - 1.*
 dftd4:
-  - 3.7.*
+  - 4.*
 hdf5:
   - 1.14.*
