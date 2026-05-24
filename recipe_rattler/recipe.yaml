@@ -37,20 +37,23 @@ build:
     env:
       REST_HOME: ${SRC_DIR}
       HDF5_DIR: "${BUILD_PREFIX}"
+      if: win
+      then:
+        CONDA_BUILD_WINSDK: ${BUILD_PREFIX}/x86_64-w64-mingw32/sysroot
 
 requirements:
   build:
     - if: win
-      then: ${{ compiler('m2w64_c') }}
+      then: gcc_win-64
       else: ${{ compiler('c') }}
     - if: win
-      then: ${{ compiler('m2w64_cxx') }}
+      then: gxx_win-64
       else: ${{ compiler('cxx') }}
     - if: win
-      then: ${{ compiler('m2w64_fortran') }}
+      then: gfortran_win-64
       else: ${{ compiler('fortran') }}
     - if: win
-      then: ${{ stdlib('m2w64_c') }}
+      then: m2w64-sysroot_win-64
     - ${{ compiler('rust') }}
     - if: win
       then: rust-std-x86_64-pc-windows-gnu
