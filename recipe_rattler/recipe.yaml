@@ -36,10 +36,6 @@ build:
   script:
     env:
       REST_HOME: ${SRC_DIR}
-      HDF5_DIR: "${BUILD_PREFIX}"
-      if: win
-      then:
-        CONDA_BUILD_WINSDK: ${BUILD_PREFIX}/x86_64-w64-mingw32/sysroot
 
 requirements:
   build:
