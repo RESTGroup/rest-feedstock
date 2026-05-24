@@ -36,6 +36,7 @@ build:
   script:
     env:
       REST_HOME: ${SRC_DIR}
+      CONDA_BUILD_WINSDK: ${{ '${BUILD_PREFIX}/x86_64-w64-mingw32/sysroot' if target_platform == 'win-64' else '' }}
 
 requirements:
   build:

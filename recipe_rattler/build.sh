@@ -24,7 +24,6 @@ if [[ "$target_platform" == win-64 ]]; then
 
   MOKIT_LIB="${PREFIX}/Lib/site-packages/mokit/lib/librest2fch.${LIB_EXT}"
 
-  export CONDA_BUILD_WINSDK="${BUILD_PREFIX}/x86_64-w64-mingw32/sysroot"
   export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER="${CC}"
 else
   if [[ "$target_platform" == osx-* ]]; then
