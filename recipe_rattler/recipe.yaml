@@ -54,8 +54,9 @@ requirements:
     - ${{ compiler('rust') }}
     - if: win
       then: rust-std-x86_64-pc-windows-gnu
-    - if: not win
-      then: libclang 21.*
+    - if: win
+      then: libclang
+      else: libclang 21.*
     - hdf5
     - libcint
     - openblas * openmp*
