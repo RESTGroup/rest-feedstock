@@ -27,6 +27,7 @@ if [[ "$target_platform" == win-64 ]]; then
   export CXXFLAGS="-fvisibility-inlines-hidden -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe -DNDEBUG"
   export CPPFLAGS="-DNDEBUG -D_FORTIFY_SOURCE=2 -O2"
   export LDFLAGS="-Wl,-O2 -Wl,--sort-common -L$PREFIX/lib"
+  export PYO3_CROSS_PYTHON_VERSION="${PY_VER}"
   export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER="${CC}"
 else
   if [[ "$target_platform" == osx-* ]]; then
