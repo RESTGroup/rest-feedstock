@@ -62,7 +62,9 @@ requirements:
     - openblas * openmp*
     - python
     - libxc-c
-    - openmpi 4.*
+    - if: win
+      then: msmpi
+      else: openmpi 4.*
     - mokit
     - geometric
     - simple-dftd3
@@ -77,7 +79,9 @@ requirements:
     - openblas * openmp*
     - python
     - libxc-c
-    - openmpi 4.*
+    - if: win
+      then: msmpi
+      else: openmpi 4.*
     - mokit
     - geometric
     - simple-dftd3
@@ -90,7 +94,9 @@ requirements:
     - openblas * openmp*
     - python
     - libxc-c
-    - openmpi 4.*
+    - if: win
+      then: msmpi
+      else: openmpi 4.*
     - mokit
     - geometric
     - simple-dftd3
