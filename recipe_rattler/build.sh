@@ -43,6 +43,15 @@ export HDF5_DIR="${BUILD_PREFIX}"
 export LIBCLANG_PATH="${BUILD_PREFIX}/lib"
 export REST_EXT_DIR
 
+cd rest
+mkdir -p "${REST_EXT_DIR}"
+
+if [[ ! -f "${MOKIT_LIB}" ]]; then
+  echo "Could not find mokit bridge library: ${MOKIT_LIB}" >&2
+  exit 1
+fi
+cp "${MOKIT_LIB}" "${REST_EXT_DIR}"
+
 if [[ "$target_platform" == win-64 ]]; then
   cargo install --path . --profile release --target x86_64-pc-windows-gnu --root ${PREFIX}
 else
