@@ -130,7 +130,6 @@ tests:
         - restgroup::rest_regression
     files:
       source:
-        # - rest/basis-set-pool
         - rest_regression
 
 about:

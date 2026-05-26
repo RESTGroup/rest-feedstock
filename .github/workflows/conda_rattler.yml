@@ -29,6 +29,13 @@ jobs:
           conda info
           conda activate build-env
           rattler-build build --recipe recipe_rattler --output-dir output --skip-existing=all -c conda-forge -c mokit -c restgroup
+      - name: Upload regression logs (on build failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-logs-${{ runner.os }}-${{ runner.arch }}
+          path: output/test/*/**/rest_regression/work_pool/**
+          if-no-files-found: ignore
       - name: Build util
         run: |
           conda activate build-env
@@ -115,6 +122,13 @@ jobs:
           conda activate build-env
           rattler-build build --recipe recipe_rattler --output-dir output --skip-existing=all -c conda-forge -c mokit -c restgroup
           # conda-build --test output/*/*tar.bz2
+      - name: Upload regression logs (on build failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-logs-${{ runner.os }}-${{ runner.arch }}
+          path: output/test/*/**/rest_regression/work_pool/**
+          if-no-files-found: ignore
       - name: Build util
         run: |
           conda activate build-env
