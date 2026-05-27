@@ -99,7 +99,7 @@ jobs:
           echo $GIT_INFO4
           # Combine and hash them to create a stable, shorter key component
           GIT_SOURCE_HASH_014=$(echo -n "${GIT_INFO0}-${GIT_INFO1}-${GIT_INFO4}" | sha256sum | head -c 12)
-          GIT_SOURCE_HASH_23=$(echo -n "${GIT_INFO2}-${GIT_INFO3}" | sha256sum | head -c 12)
+          GIT_SOURCE_HASH_23=$(echo -n "${GIT_INFO1}-${GIT_INFO2}-${GIT_INFO3}" | sha256sum | head -c 12)
           echo "GIT_SOURCE_HASH_014=${GIT_SOURCE_HASH_014}" >> $GITHUB_ENV
           echo "GIT_SOURCE_HASH_23=${GIT_SOURCE_HASH_23}" >> $GITHUB_ENV
       - name: Cache Rattler git sources 0,1,4
