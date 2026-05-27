@@ -13,8 +13,8 @@ source:
   #- git: https://gitee.com/restgroup/rest_tensors.git
   - git: https://gitee.com/canarias/rest_tensors.git
     #tag: v2025.02
-    rev: fc053c890f0c7c2f4c27648fd8ac031f6f20fe76
-    #branch: for-win
+    #rev: fc053c890f0c7c2f4c27648fd8ac031f6f20fe76
+    branch: for-win
     target_directory: rest_tensors
   - git: https://gitee.com/restgroup/rest_libcint.git
     #tag: v2025.01
