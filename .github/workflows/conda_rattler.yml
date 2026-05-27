@@ -95,30 +95,25 @@ jobs:
           GIT_INFO1=$(extract_git_info 1)
           GIT_INFO2=$(extract_git_info 2)
           GIT_INFO3=$(extract_git_info 3)
-          GIT_INFO4=$(extract_git_info 4)
-          echo $GIT_INFO4
           # Combine and hash them to create a stable, shorter key component
-          GIT_SOURCE_HASH_014=$(echo -n "${GIT_INFO0}-${GIT_INFO1}-${GIT_INFO4}" | sha256sum | head -c 12)
-          GIT_SOURCE_HASH_23=$(echo -n "${GIT_INFO1}-${GIT_INFO2}-${GIT_INFO3}" | sha256sum | head -c 12)
-          echo "GIT_SOURCE_HASH_014=${GIT_SOURCE_HASH_014}" >> $GITHUB_ENV
-          echo "GIT_SOURCE_HASH_23=${GIT_SOURCE_HASH_23}" >> $GITHUB_ENV
-      - name: Cache Rattler git sources 0,1,4
+          GIT_SOURCE_HASH_03=$(echo -n "${GIT_INFO0}-${GIT_INFO3}" | sha256sum | head -c 12)
+          GIT_SOURCE_HASH_12=$(echo -n "${GIT_INFO1}-${GIT_INFO2}" | sha256sum | head -c 12)
+          echo "GIT_SOURCE_HASH_03=${GIT_SOURCE_HASH_03}" >> $GITHUB_ENV
+          echo "GIT_SOURCE_HASH_12=${GIT_SOURCE_HASH_12}" >> $GITHUB_ENV
+      - name: Cache Rattler git sources 0,3
         uses: actions/cache@v4
         with:
           path: |
-            output/src_cache/rest_workspace.git
             output/src_cache/rest.git
             output/src_cache/rest_regression.git
-          key: ${{ runner.os }}-git-src-${{ env.GIT_SOURCE_HASH_014 }}
-      - name: Cache Rattler git sources 2,3
+          key: ${{ runner.os }}-git-src-${{ env.GIT_SOURCE_HASH_03 }}
+      - name: Cache Rattler git sources 1,2
         uses: actions/cache@v4
-        # env:
-        #   GIT_SOURCE_HASH: ${{ env.GIT_SOURCE_HASH }}
         with:
           path: |
             output/src_cache/rest_tensors.git
             output/src_cache/rest_libcint.git
-          key: ${{ runner.os }}-git-src-${{ env.GIT_SOURCE_HASH_23 }}
+          key: ${{ runner.os }}-git-src-${{ env.GIT_SOURCE_HASH_12 }}
       - name: Build recipe
         run: |
           conda info
