@@ -8,7 +8,7 @@ source:
   # - git: https://gitee.com/restgroup/rest.git
   - git: https://gitee.com/canarias/rest.git
     # rev: "208b61427787a5fb946a1a9b7bf9daa8dd0e4ab9"
-    branch: no-mpi
+    branch: for-win
     target_directory: rest
   #- git: https://gitee.com/restgroup/rest_tensors.git
   - git: https://gitee.com/canarias/rest_tensors.git
