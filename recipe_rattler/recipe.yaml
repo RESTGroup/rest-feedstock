@@ -16,9 +16,6 @@ source:
   #  `openssl sha256 <file name>`.
   # You may need the openssl package, available on conda-forge:
   #  `conda install openssl -c conda-forge`
-  - git: https://gitee.com/restgroup/rest_workspace.git
-    tag: v2025.02
-    # rev: master
   - git: https://gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
     #tag: v2025.01
@@ -54,6 +51,24 @@ build:
       HDF5_DIR: "${BUILD_PREFIX}"
     content: |
       set -ex
+
+      cat > Cargo.toml << 'EOF'
+      [workspace]
+      resolver = "2"
+
+      members = [
+          "rest_tensors",
+          "rest_libcint",
+          "rest",
+          "rest_regression",
+      ]
+
+      [profile.release]
+      opt-level = 3
+      lto = "fat"
+      codegen-units = 1
+      EOF
+
       cd rest
       # mkdir -p ${REST_DEPS}
       # mkdir -p ${REST_DEPS}/lib
