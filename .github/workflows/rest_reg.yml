@@ -28,6 +28,7 @@ jobs:
           conda activate build-env
           rattler-build build --recipe recipe_rest_reg --no-build-id --output-dir output --skip-existing=all -c conda-forge -c restgroup
       - name: Upload to Anaconda.org
+        continue-on-error: true
         env:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
         run: |
@@ -88,6 +89,7 @@ jobs:
           conda activate build-env
           rattler-build build --recipe recipe_rest_reg --no-build-id --output-dir output --skip-existing=all -c conda-forge -c restgroup
       - name: Upload to Anaconda.org
+        continue-on-error: true
         env:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
         run: |
