@@ -2,16 +2,16 @@
 
 package:
   name: "rest_regression"
-  version: v2025.02.4
+  version: v2025.02.7
 
 source:
   - git: https://gitee.com/restgroup/rest_regression.git
-    rev: 71be51b48bbf43c87e41609f12be93bb57eae6e2
+    rev: 07d76616df6e34f5628b3a3800f9ab8f83677cc7
     # tag: v2025.02
     target_directory: rest_regression
 
 build:
-  number: 3
+  number: 0
   # Uncomment the following line if the package is pure Python and the recipe is exactly the same for all platforms.
   # It is okay if the dependencies are not built for all platforms/versions, although selectors are still not allowed.
   # See https://conda-forge.org/docs/maintainer/knowledge_base.html#noarch-python for more details.
