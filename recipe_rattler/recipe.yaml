@@ -100,14 +100,15 @@ requirements:
     - dftd4
 
 tests:
-  - script: run_tests.sh
-    requirements:
-      run:
-        # - {{ compiler('rust') }}
-        - restgroup::rest_regression
-    files:
-      source:
-        - rest_regression
+  - if: not win
+    then:
+      script: run_tests.sh
+      requirements:
+        run:
+          - restgroup::rest_regression
+      files:
+        source:
+          - rest_regression
 
 about:
   homepage: https://gitee.com/restgroup/rest
