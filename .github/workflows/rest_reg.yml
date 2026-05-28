@@ -26,7 +26,7 @@ jobs:
       - name: Build REST Regression recipe
         run: |
           conda activate build-env
-          rattler-build build --recipe recipe_rest_reg --no-build-id --output-dir output --skip-existing=all -c conda-forge
+          rattler-build build --recipe recipe_rest_reg --no-build-id --output-dir output --skip-existing=all -c conda-forge -c restgroup
       - name: Upload to Anaconda.org
         env:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
@@ -86,7 +86,7 @@ jobs:
           # conda info
           # conda env list
           conda activate build-env
-          rattler-build build --recipe recipe_rest_reg --no-build-id --output-dir output --skip-existing=all -c conda-forge
+          rattler-build build --recipe recipe_rest_reg --no-build-id --output-dir output --skip-existing=all -c conda-forge -c restgroup
       - name: Upload to Anaconda.org
         env:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
@@ -111,7 +111,7 @@ jobs:
       - name: Build REST Regression recipe (win-64)
         run: |
           conda activate build-env
-          rattler-build build --recipe recipe_rest_reg --no-build-id --output-dir output --target-platform win-64 --skip-existing=all -c conda-forge
+          rattler-build build --recipe recipe_rest_reg --no-build-id --output-dir output --target-platform win-64 --skip-existing=all -c conda-forge -c restgroup
       - name: Upload to Anaconda.org
         continue-on-error: true
         env:
