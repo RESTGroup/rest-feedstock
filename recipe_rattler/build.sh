@@ -20,6 +20,7 @@ EOF
 if [[ "$target_platform" == win-64 ]]; then
   LIB_EXT="dll"
   REST_EXT_DIR="${PREFIX}/Library/bin"
+  HDF5_DIR="${PREFIX}/Library"
 
   MOKIT_LIB="${PREFIX}/Lib/site-packages/mokit/lib/librest2fch.${LIB_EXT}"
 
@@ -37,10 +38,11 @@ else
   fi
 
   REST_EXT_DIR="${PREFIX}/lib"
+  HDF5_DIR="${BUILD_PREFIX}"
   MOKIT_LIB="${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.${LIB_EXT}"
 fi
 
-export HDF5_DIR="${BUILD_PREFIX}"
+export HDF5_DIR
 export LIBCLANG_PATH="${BUILD_PREFIX}/lib"
 export REST_EXT_DIR
 
