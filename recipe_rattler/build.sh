@@ -60,7 +60,7 @@ if [[ "$target_platform" == win-64 ]]; then
     echo "ERROR: rest_tensors/build.rs is missing rustc-link-arg directive for restmatr" >&2
     exit 1
   fi
-  cargo install --path . --profile release --target x86_64-pc-windows-gnu --no-default-features --features "dftd3,dftd4" --root ${PREFIX}
+  cargo install --path . --profile release --target x86_64-pc-windows-gnu --no-default-features --features "dftd3,dftd4,no-pylib" --root ${PREFIX}
 else
   cargo install --path . --profile release --root ${PREFIX}
 fi
