@@ -30,7 +30,7 @@ source:
     target_directory: rest_regression
 
 build:
-  number: 3
+  number: 4
   files:
     exclude:
       - "**/__pycache__"
