@@ -43,13 +43,13 @@ build:
 requirements:
   build:
     - if: win
-      then: gcc_win-64
+      then: ${{ compiler('m2w64_c')}}
       else: ${{ compiler('c') }}
     - if: win
-      then: gxx_win-64
+      then: ${{ compiler('m2w64_cxx')}}
       else: ${{ compiler('cxx') }}
     - if: win
-      then: gfortran_win-64
+      then: ${{ compiler('m2w64_fortran')}}
       else: ${{ compiler('fortran') }}
     - if: win
       then: m2w64-sysroot_win-64
