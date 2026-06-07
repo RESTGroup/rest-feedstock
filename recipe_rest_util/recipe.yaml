@@ -24,7 +24,14 @@ build:
   # noarch: python
   script:
     content: |
-      python -c "import os, runpy; runpy.run_path(os.path.join(os.environ['RECIPE_DIR'], 'run_build_util.py'), run_name='__main__')"
+      set -ex
+      if [[ "$target_platform" == win-* ]]; then
+        DEST="${PREFIX}/Scripts"
+      else
+        DEST="${PREFIX}/bin"
+      fi
+      mkdir -p "${DEST}"
+      cp ${SRC_DIR}/utilities/*.py "${DEST}/"
 
 requirements:
   build:

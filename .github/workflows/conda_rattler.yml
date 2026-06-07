@@ -152,7 +152,7 @@ jobs:
           rattler-build upload anaconda -o restgroup ./output/*/rest-util*.conda
 
   build-cross-windows:
-    if: github.ref_name == 'cross-win-64'
+    #if: github.ref_name == 'cross-win-64'
     runs-on: ubuntu-22.04
     defaults:
       run:
