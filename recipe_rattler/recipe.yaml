@@ -51,9 +51,10 @@ requirements:
     - if: win
       then: ${{ compiler('fortran')}}
       else: ${{ compiler('fortran') }}
-    # - if: win
-    #   then: m2w64-sysroot_win-64
-    - ${{ stdlib('c') }}
+    - if: win
+      then: m2w64-sysroot_win-64
+    - if: not win
+      then: ${{ stdlib('c') }}
     - ${{ compiler('rust') }}
     - if: win
       then: rust-std-x86_64-pc-windows-gnu
@@ -71,8 +72,6 @@ requirements:
     - geometric
     - simple-dftd3
     - dftd4
-    - if: linux
-      then: sysroot_linux-64 ==2.17
     - if: osx
       then: llvm-openmp
   host:
