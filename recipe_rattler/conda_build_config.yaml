@@ -1,0 +1,19 @@
+c_stdlib_version:
+  -  2.17 # [linux and x86_64]
+m2w64_c_stdlib:                # [win]
+  - m2w64-sysroot              # [win]
+m2w64_c_stdlib_version:        # [win]
+  - 12                         # [win]
+python:
+  - 3.11
+rust_compiler_version:
+  - "1.94"
+simple-dftd3:
+  - 1.*
+dftd4:
+  - 4.*
+hdf5:
+  - 1.14.*
+openmpi:
+  - 4.*
+
