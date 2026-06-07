@@ -2,35 +2,35 @@
 
 package:
   name: "rest"
-  version: "2025.02.7"
+  version: "2026.1.0"
 
 source:
-  # - git: https://gitee.com/restgroup/rest.git
-  - git: https://gitee.com/canarias/rest.git
-    # rev: "208b61427787a5fb946a1a9b7bf9daa8dd0e4ab9"
-    branch: for-win
+  - git: https://gitee.com/restgroup/rest.git
+  #- git: https://gitee.com/canarias/rest.git
+    rev: 724dffa0a6b57496bb8a3bbdc1287773a3d2a2de
+    #branch: for-win
     target_directory: rest
-  #- git: https://gitee.com/restgroup/rest_tensors.git
-  - git: https://gitee.com/canarias/rest_tensors.git
+  - git: https://gitee.com/restgroup/rest_tensors.git
+  #- git: https://gitee.com/canarias/rest_tensors.git
     #tag: v2025.02
-    #rev: fc053c890f0c7c2f4c27648fd8ac031f6f20fe76
-    branch: for-win
+    rev: 1e2a2b8e1a9f8c80baf95f366743b1931bfd5aa9
+    #branch: for-win
     target_directory: rest_tensors
-  #- git: https://gitee.com/restgroup/rest_libcint.git
-  - git: https://gitee.com/canarias/rest_libcint.git
+  - git: https://gitee.com/restgroup/rest_libcint.git
+  #- git: https://gitee.com/canarias/rest_libcint.git
     #tag: v2025.01
-    #rev: "cba39d4ea645fa1e21de9060278d5de883a51658"
-    branch: thread-safe
+    rev: ba7ba116a06d3077faffc520fb1975e9e8587dcd
+    #branch: thread-safe
     target_directory: rest_libcint
-  #- git: https://gitee.com/restgroup/rest_regression.git
-  - git: https://gitee.com/canarias/rest_regression.git
+  - git: https://gitee.com/restgroup/rest_regression.git
+  #- git: https://gitee.com/canarias/rest_regression.git
     #tag: v2025.02
-    # rev: "9d253e2a2d934eacd816e049fce84d4e4b9f6512"
-    branch: win-invalid
+    rev: 42a0701c2c4d09c842527409c655090365a7f25c
+    #branch: win-invalid
     target_directory: rest_regression
 
 build:
-  number: 4
+  number: 0
   files:
     exclude:
       - "**/__pycache__"
