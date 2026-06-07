@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      - copilot/support-win-64
+      - cross-win-64
     paths:
       - recipe_rattler/**
       - recipe_rest_util/**
@@ -12,6 +14,7 @@ on:
   #     - main
 jobs:
   build-macos-arm64:
+    if: github.ref_name == 'main'
     runs-on: macos-14
     defaults:
       run:
@@ -54,6 +57,7 @@ jobs:
           rattler-build upload anaconda -o restgroup ./output/*/rest-util*.conda
 
   build-default-sysroot217:
+    if: github.ref_name == 'main'
     runs-on: ubuntu-22.04
     defaults:
       run:
@@ -146,3 +150,24 @@ jobs:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
         run: |
           rattler-build upload anaconda -o restgroup ./output/*/rest-util*.conda
+
+  build-cross-windows:
+    #if: github.ref_name == 'cross-win-64'
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./actions/cache-setup-conda
+      - name: Build recipe (win-64 cross-compile)
+        run: |
+          conda info
+          conda activate build-env
+          rattler-build build --recipe recipe_rattler --output-dir output --skip-existing=all --target-platform=win-64 -c conda-forge -c mokit -c restgroup
+      - name: Upload to Anaconda.org
+        continue-on-error: true
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
+        run: |
+          rattler-build upload anaconda -o restgroup ./output/*/rest-20*.conda

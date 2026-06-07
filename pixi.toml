@@ -1,0 +1,11 @@
+[project]
+name = "rest-feedstock"
+channels = ["conda-forge", "mokit", "restgroup"]
+platforms = ["win-64", "linux-64", "osx-arm64"]
+
+[tasks]
+build = "rattler-build build --recipe-dir recipe_rattler --output-dir output --skip-existing=all"
+
+[dependencies]
+rattler-build = "*"
+yq = "*"

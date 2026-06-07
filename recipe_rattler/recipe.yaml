@@ -2,39 +2,31 @@
 
 package:
   name: "rest"
-  version: "2025.02.7"
+  version: "2026.1.0"
 
 source:
-  #url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  # If getting the source from GitHub, remove the line above,
-  # uncomment the line below, and modify as needed. Use releases if available:
-  # url: https://github.com/simplejson/simplejson/releases/download/{{ version }}/simplejson-{{ version }}.tar.gz
-  # and otherwise fall back to archive:
-  # url: https://https://gitee.com/canarias/rest/archive/v{{ version }}.tar.gz
-  #sha256: 2b3a0c466fb4a1014ea131c2b8ea7c519f9278eba73d6fcb361b7bdb4fd494e9
-  # sha256 is the preferred checksum -- you can get it for a file with:
-  #  `openssl sha256 <file name>`.
-  # You may need the openssl package, available on conda-forge:
-  #  `conda install openssl -c conda-forge`
   - git: https://gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
-    #tag: v2025.01
-    rev: 5b48bbdb28ce657ab146357e2efe6858a9779b46
-    #branch: support-mac
+    rev: 724dffa0a6b57496bb8a3bbdc1287773a3d2a2de
+    #branch: for-win
     target_directory: rest
   - git: https://gitee.com/restgroup/rest_tensors.git
   #- git: https://gitee.com/canarias/rest_tensors.git
     #tag: v2025.02
-    rev: 0f6f10efd930b2d798e86bcce0b692102d3846d2
-    #branch: cfg-libc-import
+    rev: 1e2a2b8e1a9f8c80baf95f366743b1931bfd5aa9
+    #branch: for-win
     target_directory: rest_tensors
   - git: https://gitee.com/restgroup/rest_libcint.git
+  #- git: https://gitee.com/canarias/rest_libcint.git
     #tag: v2025.01
-    rev: cba39d4ea645fa1e21de9060278d5de883a51658
+    rev: ba7ba116a06d3077faffc520fb1975e9e8587dcd
+    #branch: thread-safe
     target_directory: rest_libcint
   - git: https://gitee.com/restgroup/rest_regression.git
+  #- git: https://gitee.com/canarias/rest_regression.git
     #tag: v2025.02
-    rev: c0b1c81d344f58aad4aa56cd8ab4f03360d0e708
+    rev: 42a0701c2c4d09c842527409c655090365a7f25c
+    #branch: win-invalid
     target_directory: rest_regression
 
 build:
@@ -46,64 +38,34 @@ build:
   script:
     env:
       REST_HOME: ${SRC_DIR}
-      # REST_DEPS: "${SRC_DIR}/rest_deps_placeholder_placeholder"
-      REST_EXT_DIR: "${PREFIX}/lib"
-      HDF5_DIR: "${BUILD_PREFIX}"
-    content: |
-      set -ex
-
-      cat > Cargo.toml << 'EOF'
-      [workspace]
-      resolver = "2"
-
-      members = [
-          "rest_tensors",
-          "rest_libcint",
-          "rest",
-          "rest_regression",
-      ]
-
-      [profile.release]
-      opt-level = 3
-      lto = "fat"
-      codegen-units = 1
-      EOF
-
-      cd rest
-      # mkdir -p ${REST_DEPS}
-      # mkdir -p ${REST_DEPS}/lib
-      if [[ "$target_platform" == osx-* ]]; then
-        LIB_EXT="dylib"
-      else
-        LIB_EXT="so"
-      fi
-      # cp ${BUILD_PREFIX}/lib/*.${LIB_EXT} ${REST_EXT_DIR}/
-      cp ${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.${LIB_EXT} ${REST_EXT_DIR}/
-      export LIBCLANG_PATH="$BUILD_PREFIX/lib"
-      cargo install --path . --profile release --root ${PREFIX}
-      mkdir -p ${PREFIX}/share/rest/
-      cp -r ./basis-set-pool ${PREFIX}/share/rest/
-      # cp ${REST_EXT_DIR}/librestmatr.${LIB_EXT} ${PREFIX}/lib/
-      # if [[ "$target_platform" == osx-* ]]; then
-      #   install_name_tool -id "@rpath/librestmatr.dylib" ${PREFIX}/lib/librestmatr.dylib
-      # fi
-      # cp ${REST_EXT_DIR}/librest2fch.${LIB_EXT} ${PREFIX}/lib/
-      # todo: remove the manual copy
+      CONDA_BUILD_WINSDK: ${{ '${BUILD_PREFIX}/x86_64-w64-mingw32/sysroot' if target_platform == 'win-64' else '' }}
 
 requirements:
   build:
-    - ${{ compiler('c') }}
-    #- {{ stdlib('c') }}
-    - ${{ compiler('cxx') }}
-    - ${{ compiler('fortran') }}
+    - if: win
+      then: gcc_win-64
+      else: ${{ compiler('c') }}
+    - if: win
+      then: gxx_win-64
+      else: ${{ compiler('cxx') }}
+    - if: win
+      then: gfortran_win-64
+      else: ${{ compiler('fortran') }}
+    - if: win
+      then: m2w64-sysroot_win-64
     - ${{ compiler('rust') }}
-    - libclang 21.*
+    - if: win
+      then: rust-std-x86_64-pc-windows-gnu
+    - if: win
+      then: libclang
+      else: libclang 21.*
     - hdf5
     - libcint
     - openblas * openmp*
     - python
     - libxc-c
-    - openmpi 
+    - if: not win
+      then: openmpi 4.*
     - mokit
     - geometric
     - simple-dftd3
@@ -118,7 +80,8 @@ requirements:
     - openblas * openmp*
     - python
     - libxc-c
-    - openmpi 
+    - if: not win
+      then: openmpi 4.*
     - mokit
     - geometric
     - simple-dftd3
@@ -131,21 +94,23 @@ requirements:
     - openblas * openmp*
     - python
     - libxc-c
-    - openmpi 
+    - if: not win
+      then: openmpi 4.*
     - mokit
     - geometric
     - simple-dftd3
     - dftd4
 
 tests:
-  - script: run_tests.sh
-    requirements:
-      run:
-        # - {{ compiler('rust') }}
-        - restgroup::rest_regression
-    files:
-      source:
-        - rest_regression
+  - if: not win
+    then:
+      script: run_tests.sh
+      requirements:
+        run:
+          - restgroup::rest_regression
+      files:
+        source:
+          - rest_regression
 
 about:
   homepage: https://gitee.com/restgroup/rest
@@ -164,7 +129,6 @@ about:
 #   license_file: LICENSE.txt
 #   # The doc_url and dev_url are optional.
   documentation: https://rest-doc.readthedocs.io/en/index.html
-#   dev_url: https://github.com/simplejson/simplejson
 
 extra:
   recipe-maintainers:

@@ -20,15 +20,22 @@ source:
     tag: v2025.02
 
 build:
-  number: 1
+  number: 2
   # noarch: python
   script:
     content: |
       set -ex
-      mkdir -p ${PREFIX}/bin
-      cp utilities/*.py ${PREFIX}/bin
+      if [[ "$target_platform" == win-* ]]; then
+        DEST="${PREFIX}/Scripts"
+      else
+        DEST="${PREFIX}/bin"
+      fi
+      mkdir -p "${DEST}"
+      cp ${SRC_DIR}/utilities/*.py "${DEST}/"
 
 requirements:
+  build:
+    - python
   run:
     - python 3.11.*
     - matplotlib
