@@ -16,10 +16,11 @@ source:
     rev: 1e2a2b8e1a9f8c80baf95f366743b1931bfd5aa9
     #branch: for-win
     target_directory: rest_tensors
-  #- git: https://gitee.com/restgroup/rest_libcint.git
-  - git: https://gitee.com/canarias/rest_libcint.git
+  - git: https://gitee.com/restgroup/rest_libcint.git
+  #- git: https://gitee.com/canarias/rest_libcint.git
     #tag: v2025.01
-    rev: 217c21a00a45cb41a45a4bafbd0f818f6d95dd04
+    rev: ba7ba116a06d3077faffc520fb1975e9e8587dcd
+    #rev: 217c21a00a45cb41a45a4bafbd0f818f6d95dd04
     #branch: thread-safe
     target_directory: rest_libcint
   - git: https://gitee.com/restgroup/rest_regression.git

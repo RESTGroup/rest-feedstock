@@ -2,5 +2,5 @@ name: build-env-rat
 channels:
   - conda-forge
 dependencies:
-  - rattler-build
+  - rattler-build=0.65
   - yq

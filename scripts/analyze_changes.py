@@ -297,13 +297,13 @@ def print_summary(transition, recipe_diff_lines, source_changes, no_fetch, full_
             print(f"│  {td}")
             print(f"│    old rev: {old_r['rev']}")
             print(f"│    new rev: {new_r['rev']}")
+            local_path = local_repo_map.get(td)
             if not no_fetch:
-                local_path = local_repo_map.get(td)
                 fetch_repo(local_path)
-                log_lines = get_log_between(local_path, old_r["rev"], new_r["rev"])
-                print(f"│    commits ({len(log_lines)}):")
-                for line in log_lines:
-                    print(f"│      {line}")
+            log_lines = get_log_between(local_path, old_r["rev"], new_r["rev"])
+            print(f"│    commits ({len(log_lines)}):")
+            for line in log_lines:
+                print(f"│      {line}")
             print(f"│")
         print(f"└─")
     else:
