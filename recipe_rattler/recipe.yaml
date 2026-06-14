@@ -2,12 +2,12 @@
 
 package:
   name: "rest"
-  version: "2026.1.0"
+  version: "2026.1.0.1"
 
 source:
   - git: https://gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
-    rev: 724dffa0a6b57496bb8a3bbdc1287773a3d2a2de
+    rev: e91cc8bb9bd63d077c63e3aa91d0ea03ee21e0a9
     #branch: for-win
     target_directory: rest
   - git: https://gitee.com/restgroup/rest_tensors.git
@@ -25,12 +25,12 @@ source:
   - git: https://gitee.com/restgroup/rest_regression.git
   #- git: https://gitee.com/canarias/rest_regression.git
     #tag: v2025.02
-    rev: 42a0701c2c4d09c842527409c655090365a7f25c
+    rev: 6c8013075c677fcefc390c46d8e58abf3830c99a
     #branch: win-invalid
     target_directory: rest_regression
 
 build:
-  number: 1
+  number: 0
   files:
     exclude:
       - "**/__pycache__"
@@ -42,15 +42,9 @@ build:
 
 requirements:
   build:
-    - if: win
-      then: ${{ compiler('c')}}
-      else: ${{ compiler('c') }}
-    - if: win
-      then: ${{ compiler('cxx')}}
-      else: ${{ compiler('cxx') }}
-    - if: win
-      then: ${{ compiler('fortran')}}
-      else: ${{ compiler('fortran') }}
+    - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
+    - ${{ compiler('fortran') }}
     - if: win
       then: m2w64-sysroot_win-64
     - if: not win
