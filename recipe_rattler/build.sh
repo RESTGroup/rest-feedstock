@@ -46,6 +46,10 @@ export HDF5_DIR
 export LIBCLANG_PATH="${BUILD_PREFIX}/lib"
 export REST_EXT_DIR
 
+if [[ "$target_platform" == osx-* ]]; then
+  export CFLAGS="${CFLAGS} -Wno-implicit-function-declaration"
+fi
+
 cd rest
 mkdir -p "${REST_EXT_DIR}"
 
