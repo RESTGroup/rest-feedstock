@@ -5,7 +5,7 @@ package:
   version: "2026.1.0.3"
 
 source:
-  - git: https://gitee.com/restgroup/rest_regression.git
+  - git: https://{{ env.get("GITEE_USER") }}:{{ env.get("GITEE_TOKEN") }}@gitee.com/restgroup/rest_regression.git
   #- git: https://gitee.com/canarias/rest_regression.git
     rev: 7cdfead22304fdbaa3a6436d90dfc0b07a4a13c6
     #branch: thread-option
