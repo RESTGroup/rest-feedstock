@@ -5,25 +5,25 @@ package:
   version: "2026.1.0.3"
 
 source:
-  - git: https://gitee.com/restgroup/rest.git
+  - git: https://{{ env.get("GITEE_USER") }}:{{ env.get("GITEE_TOKEN") }}@gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
     rev: 0a1ff34de509d18655ff4e710f44c7e4c478d399
     #branch: for-win
     target_directory: rest
-  - git: https://gitee.com/restgroup/rest_tensors.git
+  - git: https://{{ env.get("GITEE_USER") }}:{{ env.get("GITEE_TOKEN") }}@gitee.com/restgroup/rest_tensors.git
   #- git: https://gitee.com/canarias/rest_tensors.git
     #tag: v2025.02
     rev: 1e2a2b8e1a9f8c80baf95f366743b1931bfd5aa9
     #branch: for-win
     target_directory: rest_tensors
-  - git: https://gitee.com/restgroup/rest_libcint.git
+  - git: https://{{ env.get("GITEE_USER") }}:{{ env.get("GITEE_TOKEN") }}@gitee.com/restgroup/rest_libcint.git
   #- git: https://gitee.com/canarias/rest_libcint.git
     #tag: v2025.01
     rev: ba7ba116a06d3077faffc520fb1975e9e8587dcd
     #rev: 217c21a00a45cb41a45a4bafbd0f818f6d95dd04
     #branch: thread-safe
     target_directory: rest_libcint
-  - git: https://gitee.com/restgroup/rest_regression.git
+  - git: https://{{ env.get("GITEE_USER") }}:{{ env.get("GITEE_TOKEN") }}@gitee.com/restgroup/rest_regression.git
   #- git: https://gitee.com/canarias/rest_regression.git
     #tag: v2025.02
     rev: 7cdfead22304fdbaa3a6436d90dfc0b07a4a13c6

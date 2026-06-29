@@ -9,6 +9,10 @@ on:
       - .github/workflows/rest_reg.yml
       - recipe_rest_reg/**
 
+env:
+  GITEE_USER: ${{ secrets.GITEE_USER }}
+  GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+
 jobs:
   build-rest-regression-macos-arm64:
     runs-on: macos-14
@@ -83,9 +87,6 @@ jobs:
       #     restore-keys: |
       #       ${{ runner.os }}-cargo-
       - name: Build REST Regression recipe
-        env:
-          GITEE_USER: ${{ secrets.GITEE_USER }}
-          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
         run: |
           # conda info
           # conda env list
