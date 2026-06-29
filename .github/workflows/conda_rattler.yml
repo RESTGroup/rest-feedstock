@@ -13,10 +13,6 @@ on:
   #   branches:
   #     - main
 
-env:
-  GITEE_USER: ${{ secrets.GITEE_USER }}
-  GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
-
 jobs:
   build-macos-arm64:
     if: github.ref_name == 'main'
@@ -26,6 +22,14 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
+      - name: Setup SSH for Gitee
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan gitee.com >> ~/.ssh/known_hosts
       - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
@@ -69,6 +73,14 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
+      - name: Setup SSH for Gitee
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan gitee.com >> ~/.ssh/known_hosts
       - uses: ./actions/cache-setup-conda
       - name: Extract Git source info for cache key
         id: get-git-key
@@ -165,6 +177,14 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v4
+      - name: Setup SSH for Gitee
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan gitee.com >> ~/.ssh/known_hosts
       - uses: ./actions/cache-setup-conda
       - name: Build recipe (win-64 cross-compile)
         run: |
