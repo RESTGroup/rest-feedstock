@@ -78,6 +78,7 @@ requirements:
     - if: not win
       then: openmpi 4.*
     - mokit
+    - h5py
     - geometric
     - simple-dftd3
     - dftd4
@@ -92,6 +93,7 @@ requirements:
     - if: not win
       then: openmpi 4.*
     - mokit
+    - h5py
     - geometric
     - simple-dftd3
     - dftd4

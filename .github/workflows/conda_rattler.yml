@@ -124,6 +124,7 @@ jobs:
           conda info
           # conda env list
           conda activate build-env
+          git config --global http.postBuffer 524288000
           rattler-build build --recipe recipe_rattler --output-dir output --skip-existing=all -c conda-forge -c mokit -c restgroup
           # conda-build --test output/*/*tar.bz2
       - name: Upload regression logs (on build failure)
