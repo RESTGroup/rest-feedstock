@@ -2,12 +2,12 @@
 
 package:
   name: "rest"
-  version: "2026.1.0.3"
+  version: "2026.1.0.4"
 
 source:
   - git: ssh://git@gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
-    rev: 0a1ff34de509d18655ff4e710f44c7e4c478d399
+    rev: d522761778eb72473c6e7d9b7f45f65e551806d5
     #branch: for-win
     target_directory: rest
   - git: ssh://git@gitee.com/restgroup/rest_tensors.git
