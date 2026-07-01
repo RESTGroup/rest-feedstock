@@ -5,9 +5,9 @@ package:
   version: "2026.1.0.5"
 
 source:
-  - git: ssh://git@gitee.com/restgroup/rest.git
-  #- git: https://gitee.com/canarias/rest.git
-    rev: 1b4b6a4d07bade7088de2997e2f5228744449448
+  #- git: ssh://git@gitee.com/restgroup/rest.git
+  - git: https://gitee.com/canarias/rest.git
+    rev: a9051c01cd726164f0afc2985fae7b12ea26c40a
     #branch: for-win
     target_directory: rest
   - git: ssh://git@gitee.com/restgroup/rest_tensors.git
