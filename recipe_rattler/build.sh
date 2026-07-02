@@ -61,7 +61,7 @@ cp "${MOKIT_LIB}" "${REST_EXT_DIR}"
 
 if [[ "$target_platform" == win-64 ]]; then
   #export PYO3_BUILD_EXTENSION_MODULE=1
-  cargo install --path . --profile release --target x86_64-pc-windows-gnu --no-default-features --features "dftd3,dftd4" --root ${PREFIX}
+  cargo install --path . --profile release --target x86_64-pc-windows-gnu --no-default-features --features "dftd3,dftd4,geometric-pyo3" --root ${PREFIX}
 else
   cargo install --path . --profile release --root ${PREFIX}
 fi
