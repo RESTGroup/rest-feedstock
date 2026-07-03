@@ -7,7 +7,7 @@ package:
 source:
   - git: ssh://git@gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
-    rev: 2bcd0f55f9e98f7fb06e1cd0b7f8f3e5c3a4c0ca
+    rev: 09ff1610d76316cb978f9830f520363306cb0e27
     #branch: for-win
     target_directory: rest
   - git: ssh://git@gitee.com/restgroup/rest_tensors.git
@@ -31,7 +31,7 @@ source:
     target_directory: rest_regression
 
 build:
-  number: 0
+  number: 1
   files:
     exclude:
       - "**/__pycache__"
