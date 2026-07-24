@@ -31,7 +31,7 @@ test -x "${REST_REG_BIN}"
 echo ${REST_EXT_DIR}
 echo ${REST_HOME}
 echo ${PREFIX}
-"${REST_REG_BIN}" -r ./bench_pool -p "${REST_BIN}" -t 4 --skip "tddft"
+"${REST_REG_BIN}" -r ./bench_pool -p "${REST_BIN}" -t 4 
 # catch the error if rest_regression fail and print the log file
 # if ! ${PREFIX}/bin/rest_regression -r ./bench_pool -p ${PREFIX}/bin/rest; then
 #     cd bench_pool/CO_HF_Dipole
