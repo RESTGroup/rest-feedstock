@@ -18,6 +18,8 @@ simple-dftd3:
   - 1.*
 dftd4:
   - 4.*
+blas:
+  - "*=*openblas"
 hdf5:
   - 1.14.*
 openmpi:

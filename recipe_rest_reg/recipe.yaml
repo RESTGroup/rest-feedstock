@@ -5,15 +5,15 @@ package:
   version: "2026.1.0.8"
 
 source:
-  - git: ssh://git@gitee.com/restgroup/rest_regression.git
-  #- git: https://gitee.com/canarias/rest_regression.git
-    rev: c0fccd3699972b6f6dcd382f97e87e6a766ac146
-    #branch: thread-option
+  #- git: ssh://git@gitee.com/restgroup/rest_regression.git
+  - git: https://gitee.com/canarias/rest_regression.git
+    #rev: c0fccd3699972b6f6dcd382f97e87e6a766ac146
+    branch: timeout
     # tag: v2025.02
     target_directory: rest_regression
 
 build:
-  number: 0
+  number: 10
 
 
 requirements:
