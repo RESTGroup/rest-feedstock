@@ -23,11 +23,11 @@ source:
     #rev: 217c21a00a45cb41a45a4bafbd0f818f6d95dd04
     #branch: thread-safe
     target_directory: rest_libcint
-  - git: ssh://git@gitee.com/restgroup/rest_regression.git
-  #- git: https://gitee.com/canarias/rest_regression.git
+  #- git: ssh://git@gitee.com/restgroup/rest_regression.git
+  - git: https://gitee.com/canarias/rest_regression.git
     #tag: v2025.02
-    rev: c24dbc5b55afdc2fee3610f0345820da95ebb34d
-    #branch: win-invalid
+    #rev: c24dbc5b55afdc2fee3610f0345820da95ebb34d
+    branch: timeout
     target_directory: rest_regression
 
 build:
