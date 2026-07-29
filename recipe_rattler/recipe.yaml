@@ -70,6 +70,8 @@ requirements:
     - if: osx
       then: llvm-openmp
   host:
+    - if: win
+      then: libxml2 <2.15
     - hdf5
     - libcint
     - openblas * openmp*
