@@ -71,7 +71,9 @@ requirements:
       then: llvm-openmp
   host:
     - if: win
-      then: libxml2-16 !=2.15.3
+      then: libxml2 <2.15
+    - if: win
+      then: libxml2-16 <2.15
     - hdf5
     - libcint
     - openblas * openmp*
