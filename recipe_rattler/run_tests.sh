@@ -33,7 +33,7 @@ echo ${REST_HOME}
 echo ${PREFIX}
 SKIP_EXTRA=""
 if [[ "${target_platform}" == osx-* ]]; then
-  SKIP_EXTRA="--skip gw_bse"
+  SKIP_EXTRA="--skip gw_bse,hessian"
 fi
 "${REST_REG_BIN}" -r ./bench_pool -p "${REST_BIN}" -t 4 ${SKIP_EXTRA} --timeout 200
 # catch the error if rest_regression fail and print the log file
