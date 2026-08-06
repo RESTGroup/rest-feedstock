@@ -31,7 +31,7 @@ source:
     target_directory: rest_regression
 
 build:
-  number: 1
+  number: 2
   files:
     exclude:
       - "**/__pycache__"
@@ -60,7 +60,7 @@ requirements:
     - libcint
     - openblas * openmp*
     - python
-    - libxc
+    - libxc-c
     - if: not win
       then: openmpi 4.*
     - mokit
@@ -75,7 +75,7 @@ requirements:
     - libcint
     - openblas * openmp*
     - python
-    - libxc
+    - libxc-c
     - if: not win
       then: openmpi 4.*
     - mokit
@@ -90,7 +90,7 @@ requirements:
     - libcint
     - openblas * openmp*
     - python
-    - libxc
+    - libxc-c
     - if: not win
       then: openmpi 4.*
     - mokit
