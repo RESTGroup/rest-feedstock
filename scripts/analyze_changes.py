@@ -195,29 +195,45 @@ def get_recipe_sources(repo_path, commit_hash):
 
 
 def find_version_transitions(repo_path):
-    """Walk commits that touched recipe.yaml and find where package.version changed."""
+    """Walk commits that touched recipe.yaml and emit one transition per
+    adjacent pair of version labels.
+
+    Principle ('rebuild-latest'): for each version LABEL, the canonical
+    endpoint is the LAST commit (chronologically) carrying that label in
+    feedstock history. This bundles rebuild follow-ups such as 'try fix'
+    or 'build N' into their version's endpoint, so hot-fixes shipped via
+    rebuilds are attributed to the correct segment diff instead of falling
+    into a gap between segments.
+
+    Consistent with the --from/--to CLI mode, which already picks the
+    latest commit carrying each version label.
+    """
     commits = git_log_commits(repo_path, "recipe_rattler/recipe.yaml")
-    transitions = []
-    last_version = None
-    last_commit = None
-    last_build = None
+    # First pass: collapse consecutive commits carrying the same version
+    # label into a single 'epoch' whose commit is the LAST one in the run.
+    epochs = []
     for chash, subject in commits:
         version = get_recipe_version(repo_path, chash)
         if version is None:
             continue
         build = get_recipe_build(repo_path, chash)
-        if last_version is not None and version != last_version:
-            transitions.append({
-                "from_version": last_version,
-                "from_build": last_build,
-                "from_commit": last_commit,
-                "to_version": version,
-                "to_build": build,
-                "to_commit": chash,
-            })
-        last_version = version
-        last_build = build
-        last_commit = chash
+        if epochs and epochs[-1][0] == version:
+            epochs[-1] = (version, build, chash)
+        else:
+            epochs.append((version, build, chash))
+    # Second pass: emit a transition between each adjacent epoch pair.
+    transitions = []
+    for i in range(len(epochs) - 1):
+        from_version, from_build, from_commit = epochs[i]
+        to_version, to_build, to_commit = epochs[i + 1]
+        transitions.append({
+            "from_version": from_version,
+            "from_build": from_build,
+            "from_commit": from_commit,
+            "to_version": to_version,
+            "to_build": to_build,
+            "to_commit": to_commit,
+        })
     return transitions
 
 
@@ -257,7 +273,7 @@ def get_log_between(local_path, old_rev, new_rev):
     if local_path is None or not os.path.isdir(local_path):
         return [f"  [local repo not found at {local_path}]"]
     out, rc = run(
-        ["git", "log", "--oneline", f"{old_rev}..{new_rev}"],
+        ["git", "log", "--oneline", "--first-parent", f"{old_rev}..{new_rev}"],
         cwd=local_path, check=False,
     )
     if rc != 0:

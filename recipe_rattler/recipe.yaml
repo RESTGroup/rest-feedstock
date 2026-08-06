@@ -2,12 +2,12 @@
 
 package:
   name: "rest"
-  version: "2026.1.0.8"
+  version: "2026.1.0.9"
 
 source:
   - git: ssh://git@gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
-    rev: 3b2af4ff1aef3554ee8ae165a20392d4ae716282
+    rev: 8ed093335401004ed73a0aefcb8a6d94a4ad811c
     #branch: for-win
     target_directory: rest
   - git: ssh://git@gitee.com/restgroup/rest_tensors.git
@@ -19,19 +19,19 @@ source:
   - git: ssh://git@gitee.com/restgroup/rest_libcint.git
   #- git: https://gitee.com/canarias/rest_libcint.git
     #tag: v2025.01
-    rev: ba7ba116a06d3077faffc520fb1975e9e8587dcd
+    rev: fb004d3ddbb9f312ae659cb2df26dd5a56b83010
     #rev: 217c21a00a45cb41a45a4bafbd0f818f6d95dd04
     #branch: thread-safe
     target_directory: rest_libcint
-  #- git: ssh://git@gitee.com/restgroup/rest_regression.git
-  - git: https://gitee.com/canarias/rest_regression.git
+  - git: ssh://git@gitee.com/restgroup/rest_regression.git
+  #- git: https://gitee.com/canarias/rest_regression.git
     #tag: v2025.02
-    #rev: c24dbc5b55afdc2fee3610f0345820da95ebb34d
-    branch: timeout
+    rev: 24dcd2e5c4ade4203ac6258318b0ff30f0e86ad7
+    #branch: timeout
     target_directory: rest_regression
 
 build:
-  number: 2
+  number: 0
   files:
     exclude:
       - "**/__pycache__"
