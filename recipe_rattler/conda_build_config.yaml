@@ -22,4 +22,5 @@ hdf5:
   - 1.14.*
 openmpi:
   - 4.*
-
+libxc:
+  - 7.1.* cpu*
