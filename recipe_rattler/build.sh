@@ -50,6 +50,11 @@ if [[ "$target_platform" == osx-* ]]; then
   export CFLAGS="${CFLAGS} -Wno-implicit-function-declaration"
 fi
 
+CARGO_FEATURES="dftd3,dftd4,geometric-pyo3,mpi"
+if [[ "${WITH_SCALAPACK:-0}" == "1" ]]; then
+  CARGO_FEATURES="${CARGO_FEATURES},scalapack"
+fi
+
 cd rest
 mkdir -p "${REST_EXT_DIR}"
 
@@ -63,7 +68,7 @@ if [[ "$target_platform" == win-64 ]]; then
   #export PYO3_BUILD_EXTENSION_MODULE=1
   cargo install --path . --profile release --target x86_64-pc-windows-gnu --no-default-features --features "dftd3,dftd4,geometric-pyo3" --root ${PREFIX}
 else
-  cargo install --path . --profile release --root ${PREFIX}
+  cargo install --path . --profile release --features "${CARGO_FEATURES}" --root ${PREFIX}
 fi
 
 mkdir -p ${PREFIX}/share/rest/

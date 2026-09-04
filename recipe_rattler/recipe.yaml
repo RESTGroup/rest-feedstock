@@ -2,36 +2,41 @@
 
 package:
   name: "rest"
-  version: "2026.1.0.9"
+  version: "2026.1.1"
 
 source:
   - git: ssh://git@gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
-    rev: 8ed093335401004ed73a0aefcb8a6d94a4ad811c
+    rev: b0eb3fc4a04cceb74151c38a1cfebf21aa2d7f1f
     #branch: for-win
     target_directory: rest
   - git: ssh://git@gitee.com/restgroup/rest_tensors.git
   #- git: https://gitee.com/canarias/rest_tensors.git
     #tag: v2025.02
-    rev: 1e2a2b8e1a9f8c80baf95f366743b1931bfd5aa9
+    rev: 8ee89ab1fd64b3f836b8f0fdaa2f9b7f98fa105d
     #branch: for-win
     target_directory: rest_tensors
   - git: ssh://git@gitee.com/restgroup/rest_libcint.git
   #- git: https://gitee.com/canarias/rest_libcint.git
     #tag: v2025.01
-    rev: fb004d3ddbb9f312ae659cb2df26dd5a56b83010
+    rev: 399d937070a98544889687d5ed3b3aa96d38cbef
     #rev: 217c21a00a45cb41a45a4bafbd0f818f6d95dd04
     #branch: thread-safe
     target_directory: rest_libcint
   - git: ssh://git@gitee.com/restgroup/rest_regression.git
   #- git: https://gitee.com/canarias/rest_regression.git
     #tag: v2025.02
-    rev: 24dcd2e5c4ade4203ac6258318b0ff30f0e86ad7
+    rev: 8e7492d2ab6b78ade96b9511025fd60ef7fa228e
     #branch: timeout
     target_directory: rest_regression
 
 build:
-  number: 2
+  number: 0
+  string: ${{ "scalapack_" if scalapack != "disabled" else "" }}h${{ hash }}
+  variant:
+    use_keys:
+      - scalapack
+    down_prioritize_variant: ${{ 1 if scalapack != "disabled" else 0 }}
   files:
     exclude:
       - "**/__pycache__"
@@ -40,6 +45,7 @@ build:
     env:
       REST_HOME: ${SRC_DIR}
       CONDA_BUILD_WINSDK: ${{ '${BUILD_PREFIX}/x86_64-w64-mingw32/sysroot' if target_platform == 'win-64' else '' }}
+      WITH_SCALAPACK: ${{ '1' if scalapack != 'disabled' else '0' }}
 
 requirements:
   build:
@@ -83,6 +89,8 @@ requirements:
     - geometric
     - simple-dftd3
     - dftd4
+    - if: scalapack != "disabled"
+      then: scalapack
     - if: osx
       then: llvm-openmp
   run:
@@ -98,6 +106,8 @@ requirements:
     - geometric
     - simple-dftd3
     - dftd4
+    - if: scalapack != "disabled"
+      then: scalapack
 
 tests:
   - if: not win

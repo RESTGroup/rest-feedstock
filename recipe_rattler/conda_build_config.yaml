@@ -24,3 +24,7 @@ openmpi:
   - 4.*
 libxc-c:
   - 7.1.* cpu*
+scalapack:
+  - disabled    # [not linux]
+  - disabled    # [linux]
+  - 2.2.*       # [linux]
