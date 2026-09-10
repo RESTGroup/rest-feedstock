@@ -36,6 +36,12 @@ if [[ "${target_platform}" == osx-* ]]; then
   SKIP_EXTRA="--skip gw_bse,hessian"
 fi
 "${REST_REG_BIN}" -r ./bench_pool -p "${REST_BIN}" -t 4 ${SKIP_EXTRA} --timeout 200
+# ScaLAPACK variant: MPI + forced distributed paths, mirroring validate.sh --scalapack
+# (scope must stay in sync with MPI_TEST_SCOPE.md: scf, gradient + tests.toml tags=["mpi"])
+if command -v ldd >/dev/null && ldd "${REST_BIN}" | grep -qi scalapack; then
+  export REST_BASIS_DIR="${PREFIX}/share/rest/basis-set-pool"
+  "${REST_REG_BIN}" -r ./bench_pool -p "${REST_BIN}" -n 2 -t 2 --scalapack -f "scf,gradient,mpi" --timeout 600
+fi
 # catch the error if rest_regression fail and print the log file
 # if ! ${PREFIX}/bin/rest_regression -r ./bench_pool -p ${PREFIX}/bin/rest; then
 #     cd bench_pool/CO_HF_Dipole

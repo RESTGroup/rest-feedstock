@@ -2,12 +2,12 @@
 
 package:
   name: "rest_regression"
-  version: "2026.1.1"
+  version: "2026.1.1.1"
 
 source:
   - git: ssh://git@gitee.com/restgroup/rest_regression.git
   #- git: https://gitee.com/canarias/rest_regression.git
-    rev: 8e7492d2ab6b78ade96b9511025fd60ef7fa228e
+    rev: 94baafd4b486cd61ba931c53152e90932fb63aba
     #branch: timeout
     # tag: v2025.02
     target_directory: rest_regression
