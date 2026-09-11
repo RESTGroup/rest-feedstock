@@ -7,7 +7,7 @@ package:
 source:
   - git: ssh://git@gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
-    rev: 215cd4963e129e89fd97052d431eb160555db652
+    rev: acbf7ca622afa0e8cfad18c93cd4391bb2519bd8
     #branch: for-win
     target_directory: rest
   - git: ssh://git@gitee.com/restgroup/rest_tensors.git
