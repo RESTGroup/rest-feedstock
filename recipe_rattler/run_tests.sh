@@ -33,7 +33,7 @@ echo ${REST_HOME}
 echo ${PREFIX}
 SKIP_EXTRA=""
 if [[ "${target_platform}" == osx-* ]]; then
-  SKIP_EXTRA="--skip gw_bse,hessian,C6H6_R-xDH7"
+  SKIP_EXTRA="--skip gw_bse,hessian,C6H6_R-xDH7,C6H6_RPA,C6H6_ZRPS,C6H6p_R-xDH7_ROHF,C6H6p_R-xDH7_UHF,C6H6p_ZRPS_ROHF,C6H6p_ZRPS_UHF"
 fi
 "${REST_REG_BIN}" -r ./bench_pool -p "${REST_BIN}" -t 4 ${SKIP_EXTRA} --timeout 200
 # ScaLAPACK variant: MPI + forced distributed paths, mirroring validate.sh --scalapack

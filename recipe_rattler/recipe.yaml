@@ -7,13 +7,13 @@ package:
 source:
   - git: ssh://git@gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
-    rev: acbf7ca622afa0e8cfad18c93cd4391bb2519bd8
+    rev: 2a2c9f6a09129bf8930fe35bae26688c1ea72952
     #branch: for-win
     target_directory: rest
   - git: ssh://git@gitee.com/restgroup/rest_tensors.git
   #- git: https://gitee.com/canarias/rest_tensors.git
     #tag: v2025.02
-    rev: 3df708b2e72c2e5b652f5a597140e3756e76dde2
+    rev: b96c7781780188e0d5bac1cbdcf6b2f3e1881d4d
     #branch: for-win
     target_directory: rest_tensors
   - git: ssh://git@gitee.com/restgroup/rest_libcint.git
@@ -31,7 +31,7 @@ source:
     target_directory: rest_regression
 
 build:
-  number: 0
+  number: 1
   string: ${{ "scalapack_" if scalapack != "disabled" else "" }}h${{ hash }}
   variant:
     use_keys:
