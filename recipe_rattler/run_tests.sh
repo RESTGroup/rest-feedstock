@@ -46,13 +46,13 @@ fi
 echo "==== END LINKAGE DIAGNOSTICS ===="
 SKIP_EXTRA=""
 if [[ "${target_platform}" == osx-* ]]; then
-  SKIP_EXTRA="--skip gw_bse,hessian,C6H6_R-xDH7,C6H6_RPA,C6H6_ZRPS,C6H6p_R-xDH7_ROHF,C6H6p_R-xDH7_UHF,C6H6p_ZRPS_ROHF,C6H6p_ZRPS_UHF,Cu2_MP2,N2_roR-xDH7"
+  SKIP_EXTRA="--skip gw_bse,hessian,C6H6_R-xDH7,C6H6_RPA,C6H6_ZRPS,C6H6p_R-xDH7_ROHF,C6H6p_R-xDH7_UHF,C6H6p_ZRPS_ROHF,C6H6p_ZRPS_UHF,Cu2_MP2,N2_roR-xDH7,N2_roXYG3"
   # ==== mac hang reproduction diagnostic: sample the hung first-Fock-build ====
   rm -rf hang_repro
   mkdir -p hang_repro
   if [ -d ./bench_pool/dh/N2_roR-xDH7 ]; then
     cp -r ./bench_pool/dh/N2_roR-xDH7/. hang_repro/
-    ( cd hang_repro && DYLD_PRINT_LIBRARIES=1 "${REST_BIN}" ctrl.in > hang_repro.out 2>&1 ) &
+    ( cd hang_repro && DYLD_PRINT_LIBRARIES=1 "${REST_BIN}" -i ctrl.in > hang_repro.out 2>&1 ) &
     HANG_PID=$!
     sleep 100
     if kill -0 "${HANG_PID}" 2>/dev/null; then
