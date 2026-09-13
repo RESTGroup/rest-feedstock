@@ -31,9 +31,44 @@ test -x "${REST_REG_BIN}"
 echo ${REST_EXT_DIR}
 echo ${REST_HOME}
 echo ${PREFIX}
+# ==== linkage diagnostics: check the OpenMP runtime binding (mac hang investigation) ====
+echo "==== LINKAGE DIAGNOSTICS ===="
+if [[ "${target_platform}" == osx-* ]]; then
+  echo "--- otool -L ${REST_BIN} ---"
+  otool -L "${REST_BIN}" 2>&1 || true
+  OPENBLAS_DYLIB=$(find "${PREFIX}/lib" -maxdepth 1 -name "libopenblas*.dylib" 2>/dev/null | head -1)
+  echo "--- otool -L ${OPENBLAS_DYLIB} ---"
+  otool -L "${OPENBLAS_DYLIB}" 2>&1 || true
+else
+  echo "--- ldd ${REST_BIN} (omp/openblas-related) ---"
+  ldd "${REST_BIN}" 2>&1 | grep -iE "omp|openblas|gfortran|gcc" || true
+fi
+echo "==== END LINKAGE DIAGNOSTICS ===="
 SKIP_EXTRA=""
 if [[ "${target_platform}" == osx-* ]]; then
-  SKIP_EXTRA="--skip gw_bse,hessian,C6H6_R-xDH7,C6H6_RPA,C6H6_ZRPS,C6H6p_R-xDH7_ROHF,C6H6p_R-xDH7_UHF,C6H6p_ZRPS_ROHF,C6H6p_ZRPS_UHF,Cu2_MP2"
+  SKIP_EXTRA="--skip gw_bse,hessian,C6H6_R-xDH7,C6H6_RPA,C6H6_ZRPS,C6H6p_R-xDH7_ROHF,C6H6p_R-xDH7_UHF,C6H6p_ZRPS_ROHF,C6H6p_ZRPS_UHF,Cu2_MP2,N2_roR-xDH7"
+  # ==== mac hang reproduction diagnostic: sample the hung first-Fock-build ====
+  rm -rf hang_repro
+  mkdir -p hang_repro
+  if [ -d ./bench_pool/dh/N2_roR-xDH7 ]; then
+    cp -r ./bench_pool/dh/N2_roR-xDH7/. hang_repro/
+    ( cd hang_repro && DYLD_PRINT_LIBRARIES=1 "${REST_BIN}" ctrl.in > hang_repro.out 2>&1 ) &
+    HANG_PID=$!
+    sleep 100
+    if kill -0 "${HANG_PID}" 2>/dev/null; then
+      echo "==== REST HANG STACK SAMPLE (N2_roR-xDH7, pid ${HANG_PID}) ===="
+      sample "${HANG_PID}" 3 2>&1 | sed -n '1,100p' || true
+      echo "==== loaded OMP/OpenBLAS dylibs ===="
+      grep -iE "libomp|libopenblas" hang_repro/hang_repro.out 2>/dev/null | head -20 || true
+      echo "==== hang_repro.out tail ===="
+      tail -5 hang_repro/hang_repro.out 2>/dev/null || true
+      kill -9 "${HANG_PID}" 2>/dev/null || true
+      wait "${HANG_PID}" 2>/dev/null || true
+    else
+      echo "==== N2_roR-xDH7 standalone did not hang (pid exited) ===="
+      tail -5 hang_repro/hang_repro.out 2>/dev/null || true
+    fi
+  fi
 fi
 "${REST_REG_BIN}" -r ./bench_pool -p "${REST_BIN}" -t 4 ${SKIP_EXTRA} --timeout 200
 # ScaLAPACK variant: MPI + forced distributed paths, mirroring validate.sh --scalapack
