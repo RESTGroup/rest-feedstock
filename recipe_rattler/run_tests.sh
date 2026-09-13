@@ -52,12 +52,16 @@ if [[ "${target_platform}" == osx-* ]]; then
   mkdir -p hang_repro
   if [ -d ./bench_pool/dh/N2_roR-xDH7 ]; then
     cp -r ./bench_pool/dh/N2_roR-xDH7/. hang_repro/
-    ( cd hang_repro && DYLD_PRINT_LIBRARIES=1 "${REST_BIN}" -i ctrl.in > hang_repro.out 2>&1 ) &
+    (
+      cd hang_repro
+      exec env DYLD_PRINT_LIBRARIES=1 "${REST_BIN}" -i ctrl.in > hang_repro.out 2>&1
+    ) &
     HANG_PID=$!
     sleep 100
     if kill -0 "${HANG_PID}" 2>/dev/null; then
       echo "==== REST HANG STACK SAMPLE (N2_roR-xDH7, pid ${HANG_PID}) ===="
-      sample "${HANG_PID}" 3 2>&1 | sed -n '1,100p' || true
+      sample "${HANG_PID}" 3 -file hang_repro/sample.txt >/dev/null 2>&1 || true
+      sed -n '1,140p' hang_repro/sample.txt 2>/dev/null || true
       echo "==== loaded OMP/OpenBLAS dylibs ===="
       grep -iE "libomp|libopenblas" hang_repro/hang_repro.out 2>/dev/null | head -20 || true
       echo "==== hang_repro.out tail ===="
