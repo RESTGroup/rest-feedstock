@@ -1,0 +1,35 @@
+diff --git a/src/matrix/matrix_blas_lapack.rs b/src/matrix/matrix_blas_lapack.rs
+index eb3cdf2..72823a7 100644
+--- a/src/matrix/matrix_blas_lapack.rs
++++ b/src/matrix/matrix_blas_lapack.rs
+@@ -1498,8 +1498,17 @@ where T: BasicMatrix<'a, f64>
+ pub fn _power_rayon_for_symmetric_matrix<'a, T>(matr_a: &T, p: f64, threshold: f64) -> Option<MatrixFull<f64>> 
+ where T: BasicMatrix<'a, f64>
+ {
+-    let size = matr_a.size();
+-    if size[0]==size[1] {
++    // The `_dsyevd`/`_dgemm_full` calls below run on the calling (main) thread with
++    // the full OpenMP thread count, creating a real OpenMP team. On macOS (LLVM
++    // libomp) that team leaves OpenBLAS's internal level-3 lock in a state that
++    // deadlocks any later level-3 call (concurrent or not). Run them with a
++    // single-thread OpenMP context so no real team is created; the caller's rayon
++    // threads provide the parallelism.
++    let default_omp_num_threads = omp_get_num_threads_wrapper();
++    omp_set_num_threads_wrapper(1);
++    let result = {
++        let size = matr_a.size();
++        if size[0]==size[1] {
+ 
+         // because lapack sorts eigenvalues from small to large, we multiply the elements with -1.0
+         let mut om = MatrixFull::new([size[0],size[1]],0.0);
+@@ -1548,7 +1557,9 @@ where T: BasicMatrix<'a, f64>
+         println!("Error: The matrix for power operations should be NxN");
+         None
+     }
+-
++    };
++    omp_set_num_threads_wrapper(default_omp_num_threads);
++    result
+ }
+ //i, j -> ij
+ //vec_a: column vec of i rows, vec_b: row vec of j columns
