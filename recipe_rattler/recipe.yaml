@@ -110,6 +110,9 @@ requirements:
     - dftd4
     - if: scalapack != "disabled"
       then: scalapack
+  run_constraints:
+    - if: osx
+      then: llvm-openmp >=22.1.8,<23
 
 tests:
   - if: not win
