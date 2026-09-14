@@ -24,6 +24,8 @@ openmpi:
   - 4.*
 libxc-c:
   - 7.1.* cpu*
+llvm-openmp:
+  - ">=22.1.8,<23"    # [osx]
 scalapack:
   - disabled    # [not linux]
   - disabled    # [linux]

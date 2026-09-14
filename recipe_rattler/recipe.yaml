@@ -76,9 +76,7 @@ requirements:
     - simple-dftd3
     - dftd4
     - if: osx
-      then: llvm-openmp ==22.1.8
-    - if: osx
-      then: libcxx ==22.1.8
+      then: llvm-openmp
   host:
     - blas * *openblas
     - hdf5
@@ -96,9 +94,7 @@ requirements:
     - if: scalapack != "disabled"
       then: scalapack
     - if: osx
-      then: llvm-openmp ==22.1.8
-    - if: osx
-      then: libcxx ==22.1.8
+      then: llvm-openmp
   run:
     - hdf5
     - libcint
