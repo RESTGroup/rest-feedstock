@@ -10,24 +10,3 @@ index ed2d1f5..c2a1fd9 100644
                      let mut e_mp2_term_os = 0.0_f64;
                      let i_state = i_pair[0];
                      let j_state = i_pair[1];
-diff --git a/src/scf_io/mod.rs b/src/scf_io/mod.rs
-index 526bbd7..2a58c2d 100644
---- a/src/scf_io/mod.rs
-+++ b/src/scf_io/mod.rs
-@@ -4233,10 +4233,14 @@ pub fn vk_upper_with_rimatr_use_dm_only_sync_mpi(
-         vk_vec
-     } else
-     {
--        vk_upper_with_rimatr_use_dm_only_sync_v02(ri3fn, dm, spin_channel, scaling_factor)
-+        // Non-MPI: use the fine-grained per-column v01 kernel. The batched v02
-+        // kernel sustains concurrent OpenBLAS level-3 calls that deadlock macOS
-+        // LLVM libomp's queuing lock (see rest-dev/deadlock.md); v01's per-column
-+        // channel-yield keeps the lock contention intermittent.
-+        vk_upper_with_rimatr_use_dm_only_sync(ri3fn, dm, spin_channel, scaling_factor)
-     }
-     #[cfg(not(feature = "mpi"))]
--    { vk_upper_with_rimatr_use_dm_only_sync_v02(ri3fn, dm, spin_channel, scaling_factor) }
-+    { vk_upper_with_rimatr_use_dm_only_sync(ri3fn, dm, spin_channel, scaling_factor) }
- }
- 
- pub fn vk_upper_with_rimatr_sync_mpi(
