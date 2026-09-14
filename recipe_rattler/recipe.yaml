@@ -17,8 +17,6 @@ source:
     #tag: v2025.02
     rev: b96c7781780188e0d5bac1cbdcf6b2f3e1881d4d
     #branch: for-win
-    patches:
-      - patches/rest_tensors-power-rayon-fix.patch
     target_directory: rest_tensors
   - git: ssh://git@gitee.com/restgroup/rest_libcint.git
   #- git: https://gitee.com/canarias/rest_libcint.git
