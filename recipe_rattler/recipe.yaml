@@ -66,7 +66,9 @@ requirements:
       else: libclang 21.*
     - hdf5
     - libcint
-    - openblas * openmp*
+    - if: osx
+      then: openblas ==0.3.34 openmp_hea878ba_0
+      else: openblas * openmp*
     - python
     - libxc-c
     - if: not win
@@ -81,7 +83,9 @@ requirements:
     - blas * *openblas
     - hdf5
     - libcint
-    - openblas * openmp*
+    - if: osx
+      then: openblas ==0.3.34 openmp_hea878ba_0
+      else: openblas * openmp*
     - python
     - libxc-c
     - if: not win
@@ -98,7 +102,9 @@ requirements:
   run:
     - hdf5
     - libcint
-    - openblas * openmp*
+    - if: osx
+      then: openblas ==0.3.34 openmp_hea878ba_0
+      else: openblas * openmp*
     - python
     - libxc-c
     - if: not win
