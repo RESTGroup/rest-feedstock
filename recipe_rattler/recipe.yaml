@@ -17,8 +17,6 @@ source:
     #tag: v2025.02
     rev: b96c7781780188e0d5bac1cbdcf6b2f3e1881d4d
     #branch: for-win
-    patches:
-      - patches/rest_tensors-omp-guard-fix.patch
     target_directory: rest_tensors
   - git: ssh://git@gitee.com/restgroup/rest_libcint.git
   #- git: https://gitee.com/canarias/rest_libcint.git
@@ -35,7 +33,7 @@ source:
     target_directory: rest_regression
 
 build:
-  number: 2
+  number: 3
   string: ${{ "scalapack_" if scalapack != "disabled" else "" }}h${{ hash }}_${{ build_number }}
   variant:
     use_keys:
@@ -68,7 +66,7 @@ requirements:
       else: libclang 21.*
     - hdf5
     - libcint
-    - openblas * openmp*
+    - openblas <0.3.34 *openmp*
     - python
     - libxc-c
     - if: not win
@@ -83,7 +81,7 @@ requirements:
     - blas * *openblas
     - hdf5
     - libcint
-    - openblas * openmp*
+    - openblas <0.3.34 *openmp*
     - python
     - libxc-c
     - if: not win
@@ -100,7 +98,7 @@ requirements:
   run:
     - hdf5
     - libcint
-    - openblas * openmp*
+    - openblas <0.3.34 *openmp*
     - python
     - libxc-c
     - if: not win
