@@ -2,20 +2,18 @@
 
 package:
   name: "rest"
-  version: "2026.1.1.1"
+  version: "2026.1.1.2"
 
 source:
   - git: ssh://git@gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
-    rev: 2a2c9f6a09129bf8930fe35bae26688c1ea72952
+    rev: 8f55408b525ad1259aea4f4125d026d5aac57ad9
     #branch: for-win
-    patches:
-      - patches/rest-mac-hang-fix.patch
     target_directory: rest
   - git: ssh://git@gitee.com/restgroup/rest_tensors.git
   #- git: https://gitee.com/canarias/rest_tensors.git
     #tag: v2025.02
-    rev: b96c7781780188e0d5bac1cbdcf6b2f3e1881d4d
+    rev: fbea339493d4a6d3acd47bb36445ed6f16a87731
     #branch: for-win
     target_directory: rest_tensors
   - git: ssh://git@gitee.com/restgroup/rest_libcint.git
@@ -28,12 +26,12 @@ source:
   - git: ssh://git@gitee.com/restgroup/rest_regression.git
   #- git: https://gitee.com/canarias/rest_regression.git
     #tag: v2025.02
-    rev: 94baafd4b486cd61ba931c53152e90932fb63aba
+    rev: a369066aa90573e20b9d0f5e051aff891736954d
     #branch: timeout
     target_directory: rest_regression
 
 build:
-  number: 3
+  number: 0
   string: ${{ "scalapack_" if scalapack != "disabled" else "" }}h${{ hash }}_${{ build_number }}
   variant:
     use_keys:
