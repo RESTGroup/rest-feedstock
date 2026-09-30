@@ -26,7 +26,7 @@ source:
   - git: ssh://git@gitee.com/restgroup/rest_regression.git
   #- git: https://gitee.com/canarias/rest_regression.git
     #tag: v2025.02
-    rev: a369066aa90573e20b9d0f5e051aff891736954d
+    rev: 44a2b5161dc60ad4fbd9b2ee890c684fc4ae5e42
     #branch: timeout
     target_directory: rest_regression
 
