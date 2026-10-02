@@ -2,12 +2,12 @@
 
 package:
   name: "rest"
-  version: "2026.1.1.3"
+  version: "2026.1.1.4"
 
 source:
   - git: ssh://git@gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
-    rev: cf28a7caadae77b4dd4115cbc5de11bc247cd332
+    rev: 992262c37d2ac55ddb2034e8d43605b708d85b4f
     #branch: for-win
     target_directory: rest
   - git: ssh://git@gitee.com/restgroup/rest_tensors.git
@@ -26,7 +26,7 @@ source:
   - git: ssh://git@gitee.com/restgroup/rest_regression.git
   #- git: https://gitee.com/canarias/rest_regression.git
     #tag: v2025.02
-    rev: 44a2b5161dc60ad4fbd9b2ee890c684fc4ae5e42
+    rev: a62841e04ee92f11f9664acbad55e63e4c4f5c67
     #branch: timeout
     target_directory: rest_regression
 
