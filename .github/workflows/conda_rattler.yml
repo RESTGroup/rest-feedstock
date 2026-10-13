@@ -66,6 +66,57 @@ jobs:
         run: |
           rattler-build upload anaconda -o restgroup ./output/*/rest-util*.conda
 
+  build-macos-intel:
+    if: github.ref_name == 'main'
+    runs-on: macos-15-intel
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup SSH for Gitee
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan gitee.com >> ~/.ssh/known_hosts
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          activate-environment: build-env
+          environment-file: env_rattler.yaml
+      - name: Build recipe
+        run: |
+          conda info
+          conda activate build-env
+          rattler-build build --recipe recipe_rattler --output-dir output --skip-existing=all -c conda-forge -c mokit -c restgroup
+      - name: Upload regression logs (on build failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-logs-${{ runner.os }}-${{ runner.arch }}-intel
+          path: output/test/*/**/rest_regression/work_pool/**
+          if-no-files-found: ignore
+      - name: Build util
+        run: |
+          conda activate build-env
+          rattler-build build --recipe recipe_rest_util --output-dir output --skip-existing=all -c conda-forge -c restgroup
+      - name: Upload to Anaconda.org
+        continue-on-error: true
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
+        run: |
+          rattler-build upload anaconda -o restgroup ./output/*/rest-20*.conda
+      - name: Upload util to Anaconda.org
+        continue-on-error: true
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
+        run: |
+          rattler-build upload anaconda -o restgroup ./output/*/rest-util*.conda
+
   build-linux:
     if: github.ref_name == 'main'
     name: build-linux-${{ matrix.name }}-sysroot217

@@ -58,17 +58,23 @@ fi
 cd rest
 mkdir -p "${REST_EXT_DIR}"
 
-if [[ ! -f "${MOKIT_LIB}" ]]; then
-  echo "Could not find mokit bridge library: ${MOKIT_LIB}" >&2
-  exit 1
+if [[ "${WITH_LIBREST2FCH:-1}" == "1" ]]; then
+  if [[ ! -f "${MOKIT_LIB}" ]]; then
+    echo "Could not find mokit bridge library: ${MOKIT_LIB}" >&2
+    exit 1
+  fi
+  cp "${MOKIT_LIB}" "${REST_EXT_DIR}"
 fi
-cp "${MOKIT_LIB}" "${REST_EXT_DIR}"
 
 if [[ "$target_platform" == win-64 ]]; then
   #export PYO3_BUILD_EXTENSION_MODULE=1
   cargo install --path . --profile release --target x86_64-pc-windows-gnu --no-default-features --features "dftd3,dftd4,geometric-pyo3" --root ${PREFIX}
 else
-  cargo install --path . --profile release --features "${CARGO_FEATURES}" --root ${PREFIX}
+  if [[ "${WITH_LIBREST2FCH:-1}" == "1" ]]; then
+    cargo install --path . --profile release --features "${CARGO_FEATURES}" --root ${PREFIX}
+  else
+    cargo install --path . --profile release --no-default-features --features "${CARGO_FEATURES}" --root ${PREFIX}
+  fi
 fi
 
 mkdir -p ${PREFIX}/share/rest/
