@@ -1,6 +1,26 @@
 set -ex
 
-cat > Cargo.toml << 'EOF'
+if [[ "$target_platform" == osx-64 ]]; then
+  # 14 GB Intel runner: fat LTO + codegen-units=1 single-handedly OOM-thrashes
+  # during the final rest link; use the thin-LTO profile there.
+  cat > Cargo.toml << 'EOF'
+[workspace]
+resolver = "2"
+
+members = [
+    "rest_tensors",
+    "rest_libcint",
+    "rest",
+    "rest_regression",
+]
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 16
+EOF
+else
+  cat > Cargo.toml << 'EOF'
 [workspace]
 resolver = "2"
 
@@ -16,6 +36,7 @@ opt-level = 3
 lto = "fat"
 codegen-units = 1
 EOF
+fi
 
 if [[ "$target_platform" == win-64 ]]; then
   LIB_EXT="dll"
