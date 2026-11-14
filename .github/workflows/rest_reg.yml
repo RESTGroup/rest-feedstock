@@ -11,7 +11,7 @@ on:
 
 jobs:
   build-rest-regression-macos-arm64:
-    runs-on: macos-14
+    runs-on: macos-15
     defaults:
       run:
         shell: bash -l {0}
