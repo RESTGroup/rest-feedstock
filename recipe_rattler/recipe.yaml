@@ -2,31 +2,31 @@
 
 package:
   name: "rest"
-  version: "2026.1.1.5"
+  version: "2026.1.1.6"
 
 source:
   - git: ssh://git@gitee.com/restgroup/rest.git
   #- git: https://gitee.com/canarias/rest.git
-    rev: 27eab1535538a716f40e9affa3ec7c31dc82a563
+    rev: 9eb3956fe6155688e46fb0c44b27e5b24563d58b
     #branch: for-win
     target_directory: rest
   - git: ssh://git@gitee.com/restgroup/rest_tensors.git
   #- git: https://gitee.com/canarias/rest_tensors.git
     #tag: v2025.02
-    rev: 9e5a8274eec58fa2680a8d3f173c207e8107b1a1
+    rev: 574c59c7d4a3eb00294a34a2e30937910a225df2
     #branch: for-win
     target_directory: rest_tensors
   - git: ssh://git@gitee.com/restgroup/rest_libcint.git
   #- git: https://gitee.com/canarias/rest_libcint.git
     #tag: v2025.01
-    rev: 399d937070a98544889687d5ed3b3aa96d38cbef
+    rev: c68a93d32d28af9e7abf8c9617fcb2945acb2fab
     #rev: 217c21a00a45cb41a45a4bafbd0f818f6d95dd04
     #branch: thread-safe
     target_directory: rest_libcint
   - git: ssh://git@gitee.com/restgroup/rest_regression.git
   #- git: https://gitee.com/canarias/rest_regression.git
     #tag: v2025.02
-    rev: fb867104e43735c56954e34a3dddab83a6e913da
+    rev: 2231711ec5d2b31ba1fbe9c6485009811cc39ea5
     #branch: timeout
     target_directory: rest_regression
 
