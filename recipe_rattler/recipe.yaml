@@ -9,6 +9,8 @@ source:
   #- git: https://gitee.com/canarias/rest.git
     rev: 9eb3956fe6155688e46fb0c44b27e5b24563d58b
     #branch: for-win
+    patches:
+      - patches/fix-advise-huge-pages-scratch-nonlinux.patch  # !290 cfg bug: macos/win E0425, upstream fix pending
     target_directory: rest
   - git: ssh://git@gitee.com/restgroup/rest_tensors.git
   #- git: https://gitee.com/canarias/rest_tensors.git
